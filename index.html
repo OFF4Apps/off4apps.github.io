@@ -1,1 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<meta name="description"
+content="OFF4Apps — Simple applications with a focus on useful offline tools.">
+
+<title>OFF4Apps — Simple Apps. A Better Tomorrow.</title>
+
+<style>
+:root {
+    --bg: #f6f8fb;
+    --card: rgba(255,255,255,.65);
+    --card-solid: rgba(255,255,255,.9);
+    --text: #111827;
+    --muted: #667085;
+    --border: rgba(17,24,39,.10);
+
+    --blue: #1473e6;
+    --pink: #e85b91;
+
+    --blue-soft: rgba(20,115,230,.12);
+    --pink-soft: rgba(232,91,145,.12);
+
+    --shadow: 0 35px 90px rgba(20,30,50,.14);
+}
+
+body.dark {
+    --bg: #0b1017;
+    --card: rgba(20,27,38,.65);
+    --card-solid: rgba(20,27,38,.92);
+    --text: #f4f7fb;
+    --muted: #9ba8ba;
+    --border: rgba(255,255,255,.10);
+
+    --blue: #62a8ff;
+    --pink: #ff78aa;
+
+    --blue-soft: rgba(98,168,255,.12);
+    --pink-soft: rgba(255,120,170,.12);
+
+    --shadow: 0 35px 90px rgba(0,0,0,.38);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 15% 20%, var(--pink-soft), transparent 30%),
+        radial-gradient(circle at 85% 20%, var(--blue-soft), transparent 30%),
+        var(--bg);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+
+    transition:
+        background .5s ease,
+        color .5s ease;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav {
+    position: fixed;
+    z-index: 100;
+
+    top: 18px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(1100px, calc(100% - 32px));
+
+    padding: 11px 16px 11px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--card);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow: 0 12px 45px rgba(0,0,0,.08);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -.04em;
+}
+
+.logo-box {
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    color: white;
+
+    background:
+        linear-gradient(135deg,var(--blue),var(--pink));
+}
+
+.theme {
+    width: 45px;
+    height: 34px;
+
+    border: 1px solid var(--border);
+    border-radius: 999px;
+
+    background: var(--card-solid);
+    color: var(--text);
+
+    cursor: pointer;
+
+    transition: transform .25s ease;
+}
+
+.theme:hover {
+    transform: translateY(-2px);
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 100svh;
+
+    padding:
+        130px 20px
+        70px;
+
+    display: grid;
+    place-items: center;
+
+    text-align: center;
+}
+
+.hero-content {
+    width: min(1150px,100%);
+}
+
+.eyebrow {
+    margin-bottom: 16px;
+
+    color: var(--muted);
+
+    font-size: .72rem;
+    letter-spacing: .28em;
+
+    text-transform: uppercase;
+}
+
+.hero h1 {
+    margin: 0;
+
+    font-size:
+        clamp(3.2rem,8vw,7rem);
+
+    line-height: .92;
+
+    letter-spacing: -.075em;
+}
+
+.gradient {
+    background:
+        linear-gradient(
+            100deg,
+            var(--blue),
+            var(--pink)
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.hero-text {
+    max-width: 610px;
+
+    margin:
+        25px auto 0;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+
+    font-size: 1.05rem;
+}
+
+/* =========================
+   LAPTOP
+========================= */
+
+.stage {
+    width: min(1050px,100%);
+
+    margin:
+        60px auto 0;
+
+    perspective: 1400px;
+}
+
+.laptop {
+    position: relative;
+
+    width: min(850px,94%);
+
+    aspect-ratio: 16 / 10;
+
+    margin: auto;
+
+    transform:
+        rotateX(var(--rx,0deg))
+        rotateY(var(--ry,0deg))
+        scale(var(--scale,1));
+
+    transition:
+        transform .18s ease-out;
+
+    filter:
+        drop-shadow(
+            0 45px 45px
+            rgba(20,30,50,.20)
+        );
+}
+
+.screen-shell {
+    position: absolute;
+
+    top: 0;
+    left: 8%;
+    right: 8%;
+
+    height: 78%;
+
+    padding: 12px;
+
+    border-radius:
+        24px 24px 10px 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #303640,
+            #080b10
+        );
+}
+
+.screen {
+    position: relative;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    border-radius:
+        14px 14px 5px 5px;
+
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(255,255,255,.9),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            #edf2f7,
+            #dce5ef
+        );
+}
+
+body.dark .screen {
+    background:
+        radial-gradient(
+            circle at 50% 10%,
+            rgba(98,168,255,.15),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #151c27,
+            #090e15
+        );
+}
+
+.screen-content {
+    position: relative;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.screen-logo {
+    font-size:
+        clamp(1.4rem,3vw,2.6rem);
+
+    font-weight: 850;
+
+    letter-spacing: -.055em;
+}
+
+.tagline {
+    margin-top: 4px;
+    margin-bottom: 28px;
+
+    color: var(--muted);
+
+    font-size: .6rem;
+
+    letter-spacing: .25em;
+
+    text-transform: uppercase;
+}
+
+/* =========================
+   ONLINE / OFFLINE
+========================= */
+
+.choices {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,minmax(160px,230px));
+
+    gap: 18px;
+}
+
+.choice {
+    min-height: 155px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.7);
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.45);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 15px 35px
+        rgba(30,50,80,.08);
+
+    transition:
+        transform .45s cubic-bezier(.2,.8,.2,1),
+        box-shadow .45s ease,
+        border-color .45s ease;
+}
+
+body.dark .choice {
+    background:
+        rgba(20,27,38,.48);
+
+    border-color:
+        rgba(255,255,255,.10);
+}
+
+.choice:hover {
+    transform:
+        translateY(-12px)
+        scale(1.035);
+
+    box-shadow:
+        0 28px 55px
+        rgba(20,30,50,.18);
+}
+
+.choice-icon {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 12px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 16px;
+
+    font-size: 1.3rem;
+}
+
+.online .choice-icon {
+    color: var(--blue);
+    background: var(--blue-soft);
+}
+
+.offline .choice-icon {
+    color: var(--pink);
+    background: var(--pink-soft);
+}
+
+.choice strong {
+    font-size: 1.05rem;
+}
+
+.choice small {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    text-align: center;
+}
+
+.base {
+    position: absolute;
+
+    left: 3%;
+    right: 3%;
+    bottom: 2%;
+
+    height: 25%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #b6bdc6,
+            #707985
+        );
+
+    clip-path:
+        polygon(
+            5% 0,
+            95% 0,
+            100% 70%,
+            96% 100%,
+            4% 100%,
+            0 70%
+        );
+
+    border-radius:
+        5px 5px 28px 28px;
+}
+
+.trackpad {
+    position: absolute;
+
+    width: 24%;
+    height: 38%;
+
+    left: 38%;
+    top: 18%;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    border:
+        1px solid
+        rgba(0,0,0,.1);
+}
+
+.scroll {
+    margin-top: 25px;
+
+    color: var(--muted);
+
+    font-size: .75rem;
+
+    letter-spacing: .15em;
+
+    text-transform: uppercase;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    min-height: 75svh;
+
+    padding:
+        110px 24px;
+
+    display: grid;
+    place-items: center;
+}
+
+.section-inner {
+    width: min(1100px,100%);
+}
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(55px)
+        scale(.97);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.section h2 {
+    margin: 0;
+
+    font-size:
+        clamp(2.5rem,6vw,5rem);
+
+    line-height: .98;
+
+    letter-spacing: -.065em;
+}
+
+.section-description {
+    max-width: 620px;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+.cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 24px;
+
+    margin-top: 50px;
+}
+
+.card {
+    min-height: 300px;
+
+    padding: 35px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 28px;
+
+    background: var(--card);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform .45s ease,
+        border-color .45s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card-number {
+    color: var(--muted);
+
+    font-size: .7rem;
+
+    letter-spacing: .2em;
+
+    text-transform: uppercase;
+}
+
+.card h3 {
+    margin-top: 55px;
+
+    font-size: 2rem;
+
+    letter-spacing: -.04em;
+}
+
+.card p {
+    max-width: 430px;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+.pill {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding:
+        9px 14px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 999px;
+
+    background:
+        var(--card-solid);
+
+    color: var(--muted);
+
+    font-size: .78rem;
+}
+
+.final {
+    min-height: 60svh;
+
+    text-align: center;
+}
+
+.final p {
+    max-width: 550px;
+
+    margin:
+        25px auto;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding:
+        30px 24px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    color: var(--muted);
+
+    font-size: .8rem;
+}
+
+.footer-inner {
+    width: min(1100px,100%);
+
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:760px) {
+
+    .nav {
+        top: 10px;
+
+        width:
+            calc(100% - 20px);
+    }
+
+    .hero {
+        padding-top: 110px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(3rem,14vw,5rem);
+    }
+
+    .hero-text {
+        font-size: .94rem;
+    }
+
+    .stage {
+        margin-top: 45px;
+    }
+
+    .laptop {
+        width: 100%;
+
+        transform: none !important;
+    }
+
+    .screen-shell {
+        left: 2%;
+        right: 2%;
+
+        padding: 8px;
+
+        border-radius:
+            16px 16px 7px 7px;
+    }
+
+    .screen {
+        border-radius:
+            10px 10px 4px 4px;
+    }
+
+    .tagline {
+        font-size: .42rem;
+        margin-bottom: 14px;
+    }
+
+    .screen-logo {
+        font-size: 1.25rem;
+    }
+
+    .choices {
+        width: 90%;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap: 9px;
+    }
+
+    .choice {
+        min-height: 115px;
+
+        padding: 10px;
+
+        border-radius: 15px;
+    }
+
+    .choice-icon {
+        width: 34px;
+        height: 34px;
+
+        border-radius: 11px;
+
+        font-size: .9rem;
+    }
+
+    .choice strong {
+        font-size: .78rem;
+    }
+
+    .choice small {
+        font-size: .56rem;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding:
+            90px 20px;
+    }
+
+    .card {
+        min-height: 260px;
+
+        padding: 28px;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Respect users who prefer reduced motion. */
+@media(prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="nav">
+
+    <a href="#" class="logo">
+        <span class="logo-box">O4</span>
+        OFF4Apps
+    </a>
+
+    <button
+        class="theme"
+        id="themeButton"
+        type="button"
+        aria-label="Switch between light and dark mode">
+        ☼
+    </button>
+
+</header>
+
+
+<main>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="eyebrow">
+            Simple · Useful · Reliable
+        </div>
+
+        <h1>
+            Apps for a<br>
+            <span class="gradient">
+                Calmer Digital Life.
+            </span>
+        </h1>
+
+        <p class="hero-text">
+            Useful applications with a special focus on offline tools —
+            designed to keep things simple, capable and under your control.
+        </p>
+
+
+        <div class="stage" id="stage">
+
+            <div class="laptop" id="laptop">
+
+                <div class="screen-shell">
+
+                    <div class="screen">
+
+                        <div class="screen-content">
+
+                            <div class="screen-logo">
+                                OFF4<span class="gradient">Apps</span>
+                            </div>
+
+                            <div class="tagline">
+                                Simple Apps · A Better Tomorrow
+                            </div>
+
+
+                            <div class="choices">
+
+                                <a
+                                    href="#online"
+                                    class="choice online">
+
+                                    <div class="choice-icon">
+                                        ◉
+                                    </div>
+
+                                    <strong>
+                                        Online Apps
+                                    </strong>
+
+                                    <small>
+                                        When you need to connect.
+                                    </small>
+
+                                </a>
+
+
+                                <a
+                                    href="#offline"
+                                    class="choice offline">
+
+                                    <div class="choice-icon">
+                                        ◌
+                                    </div>
+
+                                    <strong>
+                                        Offline Apps
+                                    </strong>
+
+                                    <small>
+                                        Powerful tools without internet.
+                                    </small>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="base">
+                    <div class="trackpad"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="scroll">
+            Scroll to explore ↓
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= OFFLINE ================= -->
+
+<section
+    class="section"
+    id="offline">
+
+    <div class="section-inner">
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                01 · Offline First
+            </div>
+
+            <h2>
+                More control.<br>
+                <span class="gradient">
+                    Less dependency.
+                </span>
+            </h2>
+
+            <p class="section-description">
+                Applications designed to remain useful when you're
+                disconnected, travelling, conserving data or simply
+                choosing to work without the internet.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <article class="card reveal">
+
+                <div class="card-number">
+                    Offline Apps
+                </div>
+
+                <h3>
+                    Work without the web.
+                </h3>
+
+                <p>
+                    Tools that can perform their core purpose
+                    without requiring an internet connection.
+                </p>
+
+                <span class="pill">
+                    No internet required
+                </span>
+
+            </article>
+
+
+            <article class="card reveal">
+
+                <div class="card-number">
+                    OFF4Apps approach
+                </div>
+
+                <h3>
+                    Simple by design.
+                </h3>
+
+                <p>
+                    Useful applications without unnecessary
+                    complexity or distractions.
+                </p>
+
+                <span class="pill">
+                    Useful · Lightweight · Focused
+                </span>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ONLINE ================= -->
+
+<section
+    class="section"
+    id="online">
+
+    <div class="section-inner">
+
+        <div class="reveal">
+
+            <div class="eyebrow">
+                02 · Online Apps
+            </div>
+
+            <h2>
+                Connected<br>
+                <span class="gradient">
+                    when needed.
+                </span>
+            </h2>
+
+            <p class="section-description">
+                Online applications have their place too.
+                Useful connected tools when an internet
+                connection is actually part of the experience.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-number">
+                Online Apps
+            </div>
+
+            <h3>
+                Different tools. Same philosophy.
+            </h3>
+
+            <p>
+                Useful first. Simple second. No unnecessary
+                distractions.
+            </p>
+
+            <span class="pill">
+                Explore connected tools →
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= END ================= -->
+
+<section class="section final">
+
+    <div class="section-inner reveal">
+
+        <div class="eyebrow">
+            OFF4Apps
+        </div>
+
+        <h2>
+            Technology should<br>
+            <span class="gradient">
+                feel lighter.
+            </span>
+        </h2>
+
+        <p>
+            Simple applications. Thoughtful experiences.
+            A quieter way to use technology.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <span>
+            © 2026 OFF4Apps
+        </span>
+
+        <span>
+            Simple Apps. A Better Tomorrow.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script>
+"use strict";
+
+/* =========================
+   THEME
+========================= */
+
+const themeButton =
+    document.getElementById("themeButton");
+
+const savedTheme =
+    localStorage.getItem("off4apps-theme");
+
+if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+}
+
+function updateThemeButton() {
+
+    themeButton.textContent =
+        document.body.classList.contains("dark")
+            ? "☾"
+            : "☼";
+}
+
+updateThemeButton();
+
+themeButton.addEventListener("click", () => {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "off4apps-theme",
+        document.body.classList.contains("dark")
+            ? "dark"
+            : "light"
+    );
+
+    updateThemeButton();
+});
+
+
+/* =========================
+   DESKTOP LAPTOP DEPTH
+========================= */
+
+const stage =
+    document.getElementById("stage");
+
+const laptop =
+    document.getElementById("laptop");
+
+const desktopPointer =
+    window.matchMedia("(pointer:fine)");
+
+if (desktopPointer.matches) {
+
+    stage.addEventListener(
+        "pointermove",
+        (event) => {
+
+            const rect =
+                stage.getBoundingClientRect();
+
+            const x =
+                (event.clientX - rect.left)
+                / rect.width - .5;
+
+            const y =
+                (event.clientY - rect.top)
+                / rect.height - .5;
+
+            laptop.style.setProperty(
+                "--ry",
+                `${x * 5}deg`
+            );
+
+            laptop.style.setProperty(
+                "--rx",
+                `${y * -3}deg`
+            );
+        }
+    );
+
+
+    stage.addEventListener(
+        "pointerleave",
+        () => {
+
+            laptop.style.setProperty(
+                "--ry",
+                "0deg"
+            );
+
+            laptop.style.setProperty(
+                "--rx",
+                "0deg"
+            );
+        }
+    );
+}
+
+
+/* =========================
+   SCROLL-LINKED MOTION
+========================= */
+
+let ticking = false;
+
+function updateScroll() {
+
+    const rect =
+        stage.getBoundingClientRect();
+
+    const viewport =
+        window.innerHeight;
+
+    const progress =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                1 - rect.top / viewport
+            )
+        );
+
+    if (window.innerWidth > 760) {
+
+        const scale =
+            .96 + progress * .05;
+
+        laptop.style.setProperty(
+            "--scale",
+            scale.toFixed(3)
+        );
+    }
+
+    ticking = false;
+}
+
+window.addEventListener(
+    "scroll",
+    () => {
+
+        if (!ticking) {
+
+            requestAnimationFrame(
+                updateScroll
+            );
+
+            ticking = true;
+        }
+
+    },
+    { passive:true }
+);
+
+updateScroll();
+
+
+/* =========================
+   SCROLL REVEALS
+========================= */
+
+const observer =
+    new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach(
+                (entry) => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target
+                            .classList
+                            .add("visible");
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold: .15
+        }
+    );
+
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(
+        element =>
+            observer.observe(element)
+    );
+
+</script>
+
+</body>
+</html>
