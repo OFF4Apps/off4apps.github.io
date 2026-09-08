@@ -7,15 +7,26 @@
 <meta name="description"
 content="OFF4Apps — Simple applications with a focus on useful offline tools.">
 
+<meta name="theme-color" content="#f7f8fb">
+
 <title>OFF4Apps — Simple Apps. A Better Tomorrow.</title>
 
 <style>
+
+/* =========================================================
+   OFF4Apps — PHASE 2
+   Cinematic Scroll Experience
+========================================================= */
+
 :root {
-    --bg: #f6f8fb;
-    --card: rgba(255,255,255,.65);
-    --card-solid: rgba(255,255,255,.9);
+
+    --bg: #f7f8fb;
+    --surface: rgba(255,255,255,.58);
+    --surface-solid: rgba(255,255,255,.90);
+
     --text: #111827;
     --muted: #667085;
+
     --border: rgba(17,24,39,.10);
 
     --blue: #1473e6;
@@ -24,15 +35,21 @@ content="OFF4Apps — Simple applications with a focus on useful offline tools."
     --blue-soft: rgba(20,115,230,.12);
     --pink-soft: rgba(232,91,145,.12);
 
-    --shadow: 0 35px 90px rgba(20,30,50,.14);
+    --shadow:
+        0 35px 100px rgba(20,30,50,.15);
 }
 
+
 body.dark {
+
     --bg: #0b1017;
-    --card: rgba(20,27,38,.65);
-    --card-solid: rgba(20,27,38,.92);
+
+    --surface: rgba(20,27,38,.60);
+    --surface-solid: rgba(20,27,38,.92);
+
     --text: #f4f7fb;
     --muted: #9ba8ba;
+
     --border: rgba(255,255,255,.10);
 
     --blue: #62a8ff;
@@ -41,24 +58,26 @@ body.dark {
     --blue-soft: rgba(98,168,255,.12);
     --pink-soft: rgba(255,120,170,.12);
 
-    --shadow: 0 35px 90px rgba(0,0,0,.38);
+    --shadow:
+        0 35px 100px rgba(0,0,0,.40);
 }
+
 
 * {
     box-sizing: border-box;
 }
 
+
 html {
     scroll-behavior: smooth;
 }
 
+
 body {
+
     margin: 0;
+
     color: var(--text);
-    background:
-        radial-gradient(circle at 15% 20%, var(--pink-soft), transparent 30%),
-        radial-gradient(circle at 85% 20%, var(--blue-soft), transparent 30%),
-        var(--bg);
 
     font-family:
         Inter,
@@ -68,65 +87,142 @@ body {
         "Segoe UI",
         sans-serif;
 
+    background:
+
+        radial-gradient(
+            circle at 15% 20%,
+            var(--pink-soft),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 20%,
+            var(--blue-soft),
+            transparent 30%
+        ),
+
+        var(--bg);
+
     overflow-x: hidden;
 
     transition:
-        background .5s ease,
-        color .5s ease;
+        background .6s ease,
+        color .6s ease;
 }
+
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(255,255,255,.30),
+            transparent 42%
+        );
+
+    opacity: .8;
+}
+
+
+body.dark::before {
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(100,150,255,.07),
+            transparent 45%
+        );
+}
+
 
 a {
     color: inherit;
     text-decoration: none;
 }
 
-/* =========================
+
+/* =========================================================
    NAVIGATION
-========================= */
+========================================================= */
 
 .nav {
+
     position: fixed;
+
     z-index: 100;
 
     top: 18px;
+
     left: 50%;
 
     transform: translateX(-50%);
 
-    width: min(1100px, calc(100% - 32px));
+    width:
+        min(1100px, calc(100% - 32px));
 
-    padding: 11px 16px 11px 20px;
+    padding:
+        11px 16px 11px 20px;
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
+
     border-radius: 999px;
 
-    background: var(--card);
+    background:
+        var(--surface);
 
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    backdrop-filter:
+        blur(24px);
 
-    box-shadow: 0 12px 45px rgba(0,0,0,.08);
+    -webkit-backdrop-filter:
+        blur(24px);
+
+    box-shadow:
+        0 12px 45px
+        rgba(0,0,0,.08);
 }
 
+
 .logo {
+
     display: flex;
+
     align-items: center;
+
     gap: 10px;
 
     font-size: 1.1rem;
+
     font-weight: 800;
+
     letter-spacing: -.04em;
 }
 
+
 .logo-box {
+
     width: 35px;
     height: 35px;
 
     display: grid;
+
     place-items: center;
 
     border-radius: 11px;
@@ -134,72 +230,142 @@ a {
     color: white;
 
     background:
-        linear-gradient(135deg,var(--blue),var(--pink));
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--pink)
+        );
+
+    box-shadow:
+        0 8px 25px
+        rgba(20,115,230,.25);
 }
 
+
 .theme {
+
     width: 45px;
     height: 34px;
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
+
     border-radius: 999px;
 
-    background: var(--card-solid);
-    color: var(--text);
+    background:
+        var(--surface-solid);
+
+    color:
+        var(--text);
 
     cursor: pointer;
 
-    transition: transform .25s ease;
+    transition:
+        transform .25s ease;
 }
+
 
 .theme:hover {
     transform: translateY(-2px);
 }
 
-/* =========================
-   HERO
-========================= */
 
-.hero {
-    min-height: 100svh;
+/* =========================================================
+   HERO / CINEMATIC ZONE
+========================================================= */
 
-    padding:
-        130px 20px
-        70px;
+/*
+   The hero is intentionally taller than the viewport.
 
-    display: grid;
-    place-items: center;
+   This creates enough physical scroll distance
+   for the laptop animation to progress smoothly.
+*/
 
-    text-align: center;
+.cinematic {
+
+    height: 210vh;
+
+    position: relative;
 }
+
+
+.cinematic-sticky {
+
+    position: sticky;
+
+    top: 0;
+
+    height: 100svh;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
 
 .hero-content {
-    width: min(1150px,100%);
+
+    position: absolute;
+
+    z-index: 5;
+
+    top: 17%;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width:
+        min(900px,90%);
+
+    text-align: center;
+
+    pointer-events: none;
+
+    transition:
+        opacity .2s linear,
+        transform .2s linear;
 }
 
+
 .eyebrow {
+
     margin-bottom: 16px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .72rem;
+
     letter-spacing: .28em;
 
     text-transform: uppercase;
 }
 
-.hero h1 {
+
+.hero-content h1 {
+
     margin: 0;
 
     font-size:
-        clamp(3.2rem,8vw,7rem);
+        clamp(3rem,7vw,6.5rem);
 
     line-height: .92;
 
     letter-spacing: -.075em;
+
+    font-weight: 850;
 }
 
+
 .gradient {
+
     background:
         linear-gradient(
             100deg,
@@ -208,66 +374,126 @@ a {
         );
 
     -webkit-background-clip: text;
+
     background-clip: text;
 
     color: transparent;
 }
 
+
 .hero-text {
-    max-width: 610px;
+
+    max-width: 600px;
 
     margin:
-        25px auto 0;
+        24px auto;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     line-height: 1.7;
 
-    font-size: 1.05rem;
+    font-size:
+        clamp(.95rem,2vw,1.08rem);
 }
 
-/* =========================
-   LAPTOP
-========================= */
 
-.stage {
-    width: min(1050px,100%);
+/* =========================================================
+   LAPTOP WORLD
+========================================================= */
 
-    margin:
-        60px auto 0;
+.laptop-world {
 
-    perspective: 1400px;
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    perspective: 1600px;
+
+    transform-style: preserve-3d;
 }
 
-.laptop {
-    position: relative;
 
-    width: min(850px,94%);
+.ambient-glow {
 
-    aspect-ratio: 16 / 10;
+    position: absolute;
 
-    margin: auto;
+    width: 70vw;
+    height: 45vw;
+
+    max-width: 1000px;
+    max-height: 600px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            var(--pink-soft),
+            transparent 68%
+        );
+
+    filter:
+        blur(35px);
 
     transform:
+        translateY(8vh);
+
+    transition:
+        transform .1s linear,
+        opacity .1s linear;
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+.laptop {
+
+    position: relative;
+
+    width:
+        min(900px,92vw);
+
+    aspect-ratio:
+        16 / 10;
+
+    transform-style:
+        preserve-3d;
+
+    transform:
+        translate3d(
+            0,
+            var(--moveY, 6vh),
+            var(--depth, 0px)
+        )
         rotateX(var(--rx,0deg))
         rotateY(var(--ry,0deg))
         scale(var(--scale,1));
 
     transition:
-        transform .18s ease-out;
+        transform .08s linear;
 
-    filter:
-        drop-shadow(
-            0 45px 45px
-            rgba(20,30,50,.20)
-        );
+    will-change:
+        transform;
 }
 
+
 .screen-shell {
+
     position: absolute;
 
     top: 0;
+
     left: 8%;
+
     right: 8%;
 
     height: 78%;
@@ -275,17 +501,28 @@ a {
     padding: 12px;
 
     border-radius:
-        24px 24px 10px 10px;
+        25px 25px 10px 10px;
 
     background:
         linear-gradient(
             145deg,
-            #303640,
+            #363c46,
             #080b10
         );
+
+    box-shadow:
+
+        inset
+        0 0 0 1px
+        rgba(255,255,255,.13),
+
+        0 35px 60px
+        rgba(0,0,0,.20);
 }
 
+
 .screen {
+
     position: relative;
 
     height: 100%;
@@ -293,28 +530,34 @@ a {
     overflow: hidden;
 
     border-radius:
-        14px 14px 5px 5px;
+        15px 15px 5px 5px;
 
     background:
+
         radial-gradient(
-            circle at 50% 10%,
-            rgba(255,255,255,.9),
-            transparent 32%
+            circle at 50% 0%,
+            rgba(255,255,255,.95),
+            transparent 38%
         ),
+
         linear-gradient(
             145deg,
-            #edf2f7,
-            #dce5ef
+            #eef3f8,
+            #dce6f1
         );
 }
 
+
 body.dark .screen {
+
     background:
+
         radial-gradient(
-            circle at 50% 10%,
+            circle at 50% 0%,
             rgba(98,168,255,.15),
-            transparent 35%
+            transparent 38%
         ),
+
         linear-gradient(
             145deg,
             #151c27,
@@ -322,32 +565,70 @@ body.dark .screen {
         );
 }
 
+
+.screen::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            circle at 25% 45%,
+            var(--pink-soft),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 75% 50%,
+            var(--blue-soft),
+            transparent 30%
+        );
+}
+
+
 .screen-content {
+
     position: relative;
+
+    z-index: 2;
 
     height: 100%;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 }
 
+
 .screen-logo {
+
     font-size:
-        clamp(1.4rem,3vw,2.6rem);
+        clamp(1.4rem,3vw,2.5rem);
 
     font-weight: 850;
 
     letter-spacing: -.055em;
 }
 
-.tagline {
-    margin-top: 4px;
-    margin-bottom: 28px;
 
-    color: var(--muted);
+.tagline {
+
+    margin-top: 5px;
+
+    margin-bottom: 30px;
+
+    color:
+        var(--muted);
 
     font-size: .6rem;
 
@@ -356,53 +637,64 @@ body.dark .screen {
     text-transform: uppercase;
 }
 
-/* =========================
-   ONLINE / OFFLINE
-========================= */
+
+/* =========================================================
+   CHOICES
+========================================================= */
 
 .choices {
+
     display: grid;
 
     grid-template-columns:
-        repeat(2,minmax(160px,230px));
+        repeat(2,minmax(170px,230px));
 
     gap: 18px;
 }
 
+
 .choice {
-    min-height: 155px;
+
+    min-height: 150px;
 
     padding: 20px;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     border:
         1px solid
-        rgba(255,255,255,.7);
+        rgba(255,255,255,.72);
 
     border-radius: 22px;
 
     background:
         rgba(255,255,255,.45);
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
 
     box-shadow:
         0 15px 35px
         rgba(30,50,80,.08);
 
     transition:
-        transform .45s cubic-bezier(.2,.8,.2,1),
-        box-shadow .45s ease,
-        border-color .45s ease;
+        transform .4s cubic-bezier(.2,.8,.2,1),
+        box-shadow .4s ease,
+        border-color .4s ease;
 }
 
+
 body.dark .choice {
+
     background:
         rgba(20,27,38,.48);
 
@@ -410,7 +702,9 @@ body.dark .choice {
         rgba(255,255,255,.10);
 }
 
+
 .choice:hover {
+
     transform:
         translateY(-12px)
         scale(1.035);
@@ -420,47 +714,72 @@ body.dark .choice {
         rgba(20,30,50,.18);
 }
 
+
 .choice-icon {
+
     width: 48px;
     height: 48px;
 
     margin-bottom: 12px;
 
     display: grid;
+
     place-items: center;
 
     border-radius: 16px;
 
-    font-size: 1.3rem;
+    font-size: 1.25rem;
 }
+
 
 .online .choice-icon {
-    color: var(--blue);
-    background: var(--blue-soft);
+
+    color:
+        var(--blue);
+
+    background:
+        var(--blue-soft);
 }
+
 
 .offline .choice-icon {
-    color: var(--pink);
-    background: var(--pink-soft);
+
+    color:
+        var(--pink);
+
+    background:
+        var(--pink-soft);
 }
+
 
 .choice strong {
-    font-size: 1.05rem;
+    font-size: 1.03rem;
 }
 
+
 .choice small {
+
     margin-top: 6px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     text-align: center;
 }
 
+
+/* =========================================================
+   LAPTOP BASE
+========================================================= */
+
 .base {
+
     position: absolute;
 
     left: 3%;
+
     right: 3%;
+
     bottom: 2%;
 
     height: 25%;
@@ -484,9 +803,15 @@ body.dark .choice {
 
     border-radius:
         5px 5px 28px 28px;
+
+    box-shadow:
+        0 25px 25px
+        rgba(0,0,0,.18);
 }
 
+
 .trackpad {
+
     position: absolute;
 
     width: 24%;
@@ -502,40 +827,96 @@ body.dark .choice {
 
     border:
         1px solid
-        rgba(0,0,0,.1);
+        rgba(0,0,0,.10);
 }
 
-.scroll {
-    margin-top: 25px;
 
-    color: var(--muted);
+/* =========================================================
+   CINEMATIC OVERLAY
+========================================================= */
 
-    font-size: .75rem;
+.cinematic-overlay {
 
-    letter-spacing: .15em;
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 4;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 20%,
+            rgba(0,0,0,.12)
+        );
+
+    opacity:
+        var(--vignette,0);
+
+    transition:
+        opacity .1s linear;
+}
+
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator {
+
+    position: absolute;
+
+    z-index: 8;
+
+    bottom: 28px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    color:
+        var(--muted);
+
+    font-size: .72rem;
+
+    letter-spacing: .16em;
 
     text-transform: uppercase;
+
+    transition:
+        opacity .15s linear;
 }
 
-/* =========================
-   SECTIONS
-========================= */
+
+/* =========================================================
+   NORMAL SECTIONS
+========================================================= */
 
 .section {
-    min-height: 75svh;
+
+    min-height: 80svh;
 
     padding:
-        110px 24px;
+        120px 24px;
 
     display: grid;
+
     place-items: center;
 }
 
+
 .section-inner {
-    width: min(1100px,100%);
+
+    width:
+        min(1100px,100%);
 }
 
+
 .reveal {
+
     opacity: 0;
 
     transform:
@@ -547,7 +928,9 @@ body.dark .choice {
         transform .8s ease;
 }
 
+
 .reveal.visible {
+
     opacity: 1;
 
     transform:
@@ -555,7 +938,9 @@ body.dark .choice {
         scale(1);
 }
 
+
 .section h2 {
+
     margin: 0;
 
     font-size:
@@ -566,15 +951,20 @@ body.dark .choice {
     letter-spacing: -.065em;
 }
 
+
 .section-description {
+
     max-width: 620px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     line-height: 1.7;
 }
 
+
 .cards {
+
     display: grid;
 
     grid-template-columns:
@@ -585,7 +975,9 @@ body.dark .choice {
     margin-top: 50px;
 }
 
+
 .card {
+
     min-height: 300px;
 
     padding: 35px;
@@ -596,24 +988,35 @@ body.dark .choice {
 
     border-radius: 28px;
 
-    background: var(--card);
+    background:
+        var(--surface);
 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter:
+        blur(20px);
 
-    box-shadow: var(--shadow);
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        var(--shadow);
 
     transition:
         transform .45s ease,
         border-color .45s ease;
 }
 
+
 .card:hover {
-    transform: translateY(-8px);
+
+    transform:
+        translateY(-8px);
 }
 
+
 .card-number {
-    color: var(--muted);
+
+    color:
+        var(--muted);
 
     font-size: .7rem;
 
@@ -622,7 +1025,9 @@ body.dark .choice {
     text-transform: uppercase;
 }
 
+
 .card h3 {
+
     margin-top: 55px;
 
     font-size: 2rem;
@@ -630,15 +1035,20 @@ body.dark .choice {
     letter-spacing: -.04em;
 }
 
+
 .card p {
+
     max-width: 430px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     line-height: 1.7;
 }
 
+
 .pill {
+
     display: inline-block;
 
     margin-top: 20px;
@@ -653,35 +1063,47 @@ body.dark .choice {
     border-radius: 999px;
 
     background:
-        var(--card-solid);
+        var(--surface-solid);
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .78rem;
 }
 
+
+/* =========================================================
+   FINAL
+========================================================= */
+
 .final {
-    min-height: 60svh;
+
+    min-height: 65svh;
 
     text-align: center;
 }
 
+
 .final p {
+
     max-width: 550px;
 
     margin:
         25px auto;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     line-height: 1.7;
 }
 
-/* =========================
+
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 footer {
+
     padding:
         30px 24px;
 
@@ -689,57 +1111,88 @@ footer {
         1px solid
         var(--border);
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     font-size: .8rem;
 }
 
+
 .footer-inner {
-    width: min(1100px,100%);
+
+    width:
+        min(1100px,100%);
 
     margin: auto;
 
     display: flex;
+
     justify-content: space-between;
 }
 
-/* =========================
+
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
 @media(max-width:760px) {
 
     .nav {
+
         top: 10px;
 
         width:
             calc(100% - 20px);
     }
 
-    .hero {
-        padding-top: 110px;
+
+    /*
+       On mobile we shorten the cinematic area
+       and keep the laptop readable.
+    */
+
+    .cinematic {
+
+        height: 170vh;
     }
 
-    .hero h1 {
+
+    .hero-content {
+
+        top: 14%;
+    }
+
+
+    .hero-content h1 {
+
         font-size:
             clamp(3rem,14vw,5rem);
     }
 
+
     .hero-text {
-        font-size: .94rem;
+
+        font-size: .92rem;
     }
 
-    .stage {
-        margin-top: 45px;
-    }
 
     .laptop {
-        width: 100%;
 
-        transform: none !important;
+        width:
+            105vw;
+
+        transform:
+            translate3d(
+                0,
+                var(--moveY,5vh),
+                0
+            )
+            scale(var(--scale,1)) !important;
     }
 
+
     .screen-shell {
+
         left: 2%;
         right: 2%;
 
@@ -749,21 +1202,30 @@ footer {
             16px 16px 7px 7px;
     }
 
+
     .screen {
+
         border-radius:
             10px 10px 4px 4px;
     }
 
-    .tagline {
-        font-size: .42rem;
-        margin-bottom: 14px;
-    }
 
     .screen-logo {
+
         font-size: 1.25rem;
     }
 
+
+    .tagline {
+
+        font-size: .42rem;
+
+        margin-bottom: 14px;
+    }
+
+
     .choices {
+
         width: 90%;
 
         grid-template-columns:
@@ -772,134 +1234,235 @@ footer {
         gap: 9px;
     }
 
+
     .choice {
-        min-height: 115px;
+
+        min-height: 112px;
 
         padding: 10px;
 
         border-radius: 15px;
     }
 
+
     .choice-icon {
+
         width: 34px;
         height: 34px;
+
+        margin-bottom: 7px;
 
         border-radius: 11px;
 
         font-size: .9rem;
     }
 
+
     .choice strong {
-        font-size: .78rem;
+
+        font-size: .76rem;
     }
+
 
     .choice small {
-        font-size: .56rem;
+
+        font-size: .55rem;
     }
 
-    .cards {
-        grid-template-columns: 1fr;
-    }
 
     .section {
+
         padding:
             90px 20px;
     }
 
+
+    .cards {
+
+        grid-template-columns: 1fr;
+    }
+
+
     .card {
+
         min-height: 260px;
 
         padding: 28px;
     }
 
+
     .footer-inner {
+
         flex-direction: column;
+
         gap: 10px;
     }
 }
 
-/* Respect users who prefer reduced motion. */
-@media(prefers-reduced-motion:reduce) {
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        transition-duration: .01ms !important;
-    }
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media(prefers-reduced-motion:reduce) {
 
     html {
         scroll-behavior: auto;
     }
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        transition-duration:
+            .01ms !important;
+    }
 }
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
 
 <header class="nav">
 
-    <a href="#" class="logo">
-        <span class="logo-box">O4</span>
-        OFF4Apps
+    <a
+        href="#"
+        class="logo"
+        aria-label="OFF4Apps home">
+
+        <span class="logo-box">
+            O4
+        </span>
+
+        <span>
+            OFF4Apps
+        </span>
+
     </a>
+
 
     <button
         class="theme"
         id="themeButton"
         type="button"
         aria-label="Switch between light and dark mode">
+
         ☼
+
     </button>
 
 </header>
 
 
-<main>
 
-<!-- ================= HERO ================= -->
+<!-- =======================================================
+     CINEMATIC HERO
+======================================================= -->
 
-<section class="hero">
+<section
+    class="cinematic"
+    id="home">
 
-    <div class="hero-content">
 
-        <div class="eyebrow">
-            Simple · Useful · Reliable
+    <div class="cinematic-sticky">
+
+
+        <!-- Ambient background -->
+
+        <div
+            class="ambient-glow"
+            id="ambientGlow">
         </div>
 
-        <h1>
-            Apps for a<br>
-            <span class="gradient">
-                Calmer Digital Life.
-            </span>
-        </h1>
 
-        <p class="hero-text">
-            Useful applications with a special focus on offline tools —
-            designed to keep things simple, capable and under your control.
-        </p>
+        <!-- Hero text -->
+
+        <div
+            class="hero-content"
+            id="heroContent">
+
+            <div class="eyebrow">
+
+                Simple · Useful · Reliable
+
+            </div>
 
 
-        <div class="stage" id="stage">
+            <h1>
 
-            <div class="laptop" id="laptop">
+                Apps for a<br>
+
+                <span class="gradient">
+                    Calmer Digital Life.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                Useful applications with a special focus
+                on offline tools — designed to keep things
+                simple, capable and under your control.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- Laptop -->
+
+        <div
+            class="laptop-world"
+            id="laptopWorld">
+
+
+            <div
+                class="laptop"
+                id="laptop">
+
+
+                <!-- Laptop screen -->
 
                 <div class="screen-shell">
 
                     <div class="screen">
 
+
                         <div class="screen-content">
 
+
                             <div class="screen-logo">
-                                OFF4<span class="gradient">Apps</span>
+
+                                OFF4<span class="gradient">
+                                    Apps
+                                </span>
+
                             </div>
+
 
                             <div class="tagline">
+
                                 Simple Apps · A Better Tomorrow
+
                             </div>
 
 
+                            <!-- Choices -->
+
                             <div class="choices">
+
 
                                 <a
                                     href="#online"
@@ -938,6 +1501,7 @@ footer {
 
                                 </a>
 
+
                             </div>
 
                         </div>
@@ -947,31 +1511,56 @@ footer {
                 </div>
 
 
+
+                <!-- Laptop base -->
+
                 <div class="base">
+
                     <div class="trackpad"></div>
+
                 </div>
+
 
             </div>
 
         </div>
 
 
-        <div class="scroll">
-            Scroll to explore ↓
+
+        <!-- Cinematic overlay -->
+
+        <div
+            class="cinematic-overlay"
+            id="cinematicOverlay">
         </div>
+
+
+        <div
+            class="scroll-indicator"
+            id="scrollIndicator">
+
+            Scroll to enter ↓
+
+        </div>
+
 
     </div>
 
 </section>
 
 
-<!-- ================= OFFLINE ================= -->
+
+<!-- =======================================================
+     OFFLINE
+======================================================= -->
 
 <section
     class="section"
     id="offline">
 
+
     <div class="section-inner">
+
 
         <div class="reveal">
 
@@ -979,23 +1568,33 @@ footer {
                 01 · Offline First
             </div>
 
+
             <h2>
+
                 More control.<br>
+
                 <span class="gradient">
                     Less dependency.
                 </span>
+
             </h2>
 
+
             <p class="section-description">
-                Applications designed to remain useful when you're
-                disconnected, travelling, conserving data or simply
-                choosing to work without the internet.
+
+                Applications designed to remain useful
+                when you're disconnected, travelling,
+                conserving data or simply choosing to
+                work without the internet.
+
             </p>
 
         </div>
 
 
+
         <div class="cards">
+
 
             <article class="card reveal">
 
@@ -1003,14 +1602,20 @@ footer {
                     Offline Apps
                 </div>
 
+
                 <h3>
                     Work without the web.
                 </h3>
 
+
                 <p>
-                    Tools that can perform their core purpose
-                    without requiring an internet connection.
+
+                    Tools designed to perform their core
+                    purpose without requiring an internet
+                    connection.
+
                 </p>
+
 
                 <span class="pill">
                     No internet required
@@ -1019,26 +1624,33 @@ footer {
             </article>
 
 
+
             <article class="card reveal">
 
                 <div class="card-number">
                     OFF4Apps approach
                 </div>
 
+
                 <h3>
                     Simple by design.
                 </h3>
 
+
                 <p>
+
                     Useful applications without unnecessary
                     complexity or distractions.
+
                 </p>
+
 
                 <span class="pill">
                     Useful · Lightweight · Focused
                 </span>
 
             </article>
+
 
         </div>
 
@@ -1047,13 +1659,18 @@ footer {
 </section>
 
 
-<!-- ================= ONLINE ================= -->
+
+<!-- =======================================================
+     ONLINE
+======================================================= -->
 
 <section
     class="section"
     id="online">
 
+
     <div class="section-inner">
+
 
         <div class="reveal">
 
@@ -1061,20 +1678,28 @@ footer {
                 02 · Online Apps
             </div>
 
+
             <h2>
+
                 Connected<br>
+
                 <span class="gradient">
                     when needed.
                 </span>
+
             </h2>
 
+
             <p class="section-description">
+
                 Online applications have their place too.
                 Useful connected tools when an internet
                 connection is actually part of the experience.
+
             </p>
 
         </div>
+
 
 
         <div class="card reveal">
@@ -1083,14 +1708,19 @@ footer {
                 Online Apps
             </div>
 
+
             <h3>
                 Different tools. Same philosophy.
             </h3>
 
+
             <p>
-                Useful first. Simple second. No unnecessary
-                distractions.
+
+                Useful first. Simple second.
+                No unnecessary distractions.
+
             </p>
+
 
             <span class="pill">
                 Explore connected tools →
@@ -1103,34 +1733,49 @@ footer {
 </section>
 
 
-<!-- ================= END ================= -->
+
+<!-- =======================================================
+     FINAL
+======================================================= -->
 
 <section class="section final">
 
     <div class="section-inner reveal">
 
+
         <div class="eyebrow">
             OFF4Apps
         </div>
 
+
         <h2>
+
             Technology should<br>
+
             <span class="gradient">
                 feel lighter.
             </span>
+
         </h2>
 
+
         <p>
-            Simple applications. Thoughtful experiences.
+
+            Simple applications.
+            Thoughtful experiences.
             A quieter way to use technology.
+
         </p>
 
     </div>
 
 </section>
 
-</main>
 
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
 
@@ -1149,22 +1794,36 @@ footer {
 </footer>
 
 
+
 <script>
+
 "use strict";
 
-/* =========================
+
+/* =========================================================
    THEME
-========================= */
+========================================================= */
 
 const themeButton =
-    document.getElementById("themeButton");
+    document.getElementById(
+        "themeButton"
+    );
+
 
 const savedTheme =
-    localStorage.getItem("off4apps-theme");
+    localStorage.getItem(
+        "off4apps-theme"
+    );
+
 
 if (savedTheme === "dark") {
-    document.body.classList.add("dark");
+
+    document.body.classList.add(
+        "dark"
+    );
+
 }
+
 
 function updateThemeButton() {
 
@@ -1172,69 +1831,354 @@ function updateThemeButton() {
         document.body.classList.contains("dark")
             ? "☾"
             : "☼";
+
 }
+
 
 updateThemeButton();
 
-themeButton.addEventListener("click", () => {
 
-    document.body.classList.toggle("dark");
+themeButton.addEventListener(
+    "click",
+    () => {
 
-    localStorage.setItem(
-        "off4apps-theme",
-        document.body.classList.contains("dark")
-            ? "dark"
-            : "light"
+        document.body.classList.toggle(
+            "dark"
+        );
+
+
+        localStorage.setItem(
+            "off4apps-theme",
+
+            document.body.classList.contains("dark")
+                ? "dark"
+                : "light"
+        );
+
+
+        updateThemeButton();
+
+    }
+);
+
+
+
+/* =========================================================
+   CINEMATIC SCROLL ENGINE
+========================================================= */
+
+const cinematic =
+    document.getElementById(
+        "home"
     );
 
-    updateThemeButton();
-});
-
-
-/* =========================
-   DESKTOP LAPTOP DEPTH
-========================= */
-
-const stage =
-    document.getElementById("stage");
 
 const laptop =
-    document.getElementById("laptop");
+    document.getElementById(
+        "laptop"
+    );
 
-const desktopPointer =
-    window.matchMedia("(pointer:fine)");
 
-if (desktopPointer.matches) {
+const heroContent =
+    document.getElementById(
+        "heroContent"
+    );
 
-    stage.addEventListener(
+
+const ambientGlow =
+    document.getElementById(
+        "ambientGlow"
+    );
+
+
+const cinematicOverlay =
+    document.getElementById(
+        "cinematicOverlay"
+    );
+
+
+const scrollIndicator =
+    document.getElementById(
+        "scrollIndicator"
+    );
+
+
+let animationFrame =
+    null;
+
+
+function clamp(
+    value,
+    min,
+    max
+) {
+
+    return Math.max(
+        min,
+        Math.min(
+            max,
+            value
+        )
+    );
+
+}
+
+
+function updateCinematic() {
+
+
+    const rect =
+        cinematic.getBoundingClientRect();
+
+
+    /*
+       How far the cinematic section
+       has been scrolled through.
+    */
+
+    const totalDistance =
+        cinematic.offsetHeight -
+        window.innerHeight;
+
+
+    const travelled =
+        -rect.top;
+
+
+    const progress =
+        clamp(
+            travelled /
+            totalDistance,
+
+            0,
+            1
+        );
+
+
+    /*
+       Smooth easing.
+
+       This makes the laptop movement
+       feel cinematic rather than linear.
+    */
+
+    const eased =
+        progress < .5
+
+            ? 2 * progress * progress
+
+            : 1 -
+              Math.pow(
+                  -2 * progress + 2,
+                  2
+              ) / 2;
+
+
+    /* -------------------------------------
+       Laptop movement
+    ------------------------------------- */
+
+    const scale =
+        1 +
+        eased * 2.15;
+
+
+    const depth =
+        eased * 650;
+
+
+    const moveY =
+        6 -
+        eased * 9;
+
+
+    laptop.style.setProperty(
+        "--scale",
+        scale.toFixed(4)
+    );
+
+
+    laptop.style.setProperty(
+        "--depth",
+        `${depth.toFixed(1)}px`
+    );
+
+
+    laptop.style.setProperty(
+        "--moveY",
+        `${moveY.toFixed(2)}vh`
+    );
+
+
+    /* -------------------------------------
+       Hero text disappears as we approach
+       the laptop.
+    ------------------------------------- */
+
+    const textOpacity =
+        clamp(
+            1 -
+            progress * 2.1,
+
+            0,
+            1
+        );
+
+
+    const textMove =
+        progress * -80;
+
+
+    heroContent.style.opacity =
+        textOpacity;
+
+
+    heroContent.style.transform =
+        `translate(-50%, ${textMove}px)`;
+
+
+    /* -------------------------------------
+       Ambient glow follows depth.
+    ------------------------------------- */
+
+    ambientGlow.style.transform =
+        `translateY(${8 - eased * 15}vh)
+         scale(${1 + eased * 1.8})`;
+
+
+    ambientGlow.style.opacity =
+        .65 +
+        eased * .35;
+
+
+    /* -------------------------------------
+       Cinematic vignette.
+    ------------------------------------- */
+
+    cinematicOverlay.style.setProperty(
+        "--vignette",
+        (eased * .28).toFixed(3)
+    );
+
+
+    /* -------------------------------------
+       Scroll hint disappears.
+    ------------------------------------- */
+
+    scrollIndicator.style.opacity =
+        clamp(
+            1 -
+            progress * 5,
+
+            0,
+            1
+        );
+
+
+    animationFrame = null;
+
+}
+
+
+function requestCinematicUpdate() {
+
+    if (!animationFrame) {
+
+        animationFrame =
+            requestAnimationFrame(
+                updateCinematic
+            );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    requestCinematicUpdate,
+    {
+        passive: true
+    }
+);
+
+
+window.addEventListener(
+    "resize",
+    requestCinematicUpdate
+);
+
+
+updateCinematic();
+
+
+
+/* =========================================================
+   DESKTOP POINTER DEPTH
+========================================================= */
+
+const finePointer =
+    window.matchMedia(
+        "(pointer:fine)"
+    );
+
+
+if (finePointer.matches) {
+
+
+    const laptopWorld =
+        document.getElementById(
+            "laptopWorld"
+        );
+
+
+    laptopWorld.addEventListener(
         "pointermove",
         (event) => {
 
+
             const rect =
-                stage.getBoundingClientRect();
+                laptopWorld.getBoundingClientRect();
+
 
             const x =
-                (event.clientX - rect.left)
-                / rect.width - .5;
+                (
+                    event.clientX -
+                    rect.left
+                )
+                /
+                rect.width
+                -
+                .5;
+
 
             const y =
-                (event.clientY - rect.top)
-                / rect.height - .5;
+                (
+                    event.clientY -
+                    rect.top
+                )
+                /
+                rect.height
+                -
+                .5;
+
 
             laptop.style.setProperty(
                 "--ry",
-                `${x * 5}deg`
+                `${x * 4}deg`
             );
+
 
             laptop.style.setProperty(
                 "--rx",
-                `${y * -3}deg`
+                `${y * -2.5}deg`
             );
+
         }
     );
 
 
-    stage.addEventListener(
+    laptopWorld.addEventListener(
         "pointerleave",
         () => {
 
@@ -1243,78 +2187,26 @@ if (desktopPointer.matches) {
                 "0deg"
             );
 
+
             laptop.style.setProperty(
                 "--rx",
                 "0deg"
             );
+
         }
     );
+
 }
 
 
-/* =========================
-   SCROLL-LINKED MOTION
-========================= */
 
-let ticking = false;
-
-function updateScroll() {
-
-    const rect =
-        stage.getBoundingClientRect();
-
-    const viewport =
-        window.innerHeight;
-
-    const progress =
-        Math.max(
-            0,
-            Math.min(
-                1,
-                1 - rect.top / viewport
-            )
-        );
-
-    if (window.innerWidth > 760) {
-
-        const scale =
-            .96 + progress * .05;
-
-        laptop.style.setProperty(
-            "--scale",
-            scale.toFixed(3)
-        );
-    }
-
-    ticking = false;
-}
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        if (!ticking) {
-
-            requestAnimationFrame(
-                updateScroll
-            );
-
-            ticking = true;
-        }
-
-    },
-    { passive:true }
-);
-
-updateScroll();
-
-
-/* =========================
-   SCROLL REVEALS
-========================= */
+/* =========================================================
+   SECTION REVEALS
+========================================================= */
 
 const observer =
     new IntersectionObserver(
+
         (entries) => {
 
             entries.forEach(
@@ -1326,25 +2218,35 @@ const observer =
 
                         entry.target
                             .classList
-                            .add("visible");
+                            .add(
+                                "visible"
+                            );
+
                     }
 
                 }
             );
 
         },
+
         {
             threshold: .15
         }
+
     );
 
 
 document
-    .querySelectorAll(".reveal")
+    .querySelectorAll(
+        ".reveal"
+    )
     .forEach(
         element =>
-            observer.observe(element)
+            observer.observe(
+                element
+            )
     );
+
 
 </script>
 
