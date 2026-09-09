@@ -1,46 +1,1129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta name="description"
+content="OFF4Apps — Simple applications with a focus on useful offline tools.">
 
-    <meta
-        name="description"
-        content="OFF4Apps — Simple Apps. A Better Tomorrow."
-    >
+<meta name="theme-color" content="#f7f8fb">
 
-    <meta
-        name="theme-color"
-        content="#f7f8fb"
-    >
+<title>OFF4Apps — Simple Apps. A Better Tomorrow.</title>
 
-    <title>
-        OFF4Apps — Simple Apps. A Better Tomorrow.
-    </title>
+<style>
 
-    <link
-        rel="stylesheet"
-        href="styles.css"
-    >
+/* =========================================================
+   OFF4Apps — PHASE 2
+   Cinematic Scroll Experience
+========================================================= */
+
+:root {
+
+    --bg: #f7f8fb;
+    --surface: rgba(255,255,255,.58);
+    --surface-solid: rgba(255,255,255,.90);
+
+    --text: #111827;
+    --muted: #667085;
+
+    --border: rgba(17,24,39,.10);
+
+    --blue: #1473e6;
+    --pink: #e85b91;
+
+    --blue-soft: rgba(20,115,230,.12);
+    --pink-soft: rgba(232,91,145,.12);
+
+    --shadow:
+        0 35px 100px rgba(20,30,50,.15);
+}
+
+
+body.dark {
+
+    --bg: #0b1017;
+
+    --surface: rgba(20,27,38,.60);
+    --surface-solid: rgba(20,27,38,.92);
+
+    --text: #f4f7fb;
+    --muted: #9ba8ba;
+
+    --border: rgba(255,255,255,.10);
+
+    --blue: #62a8ff;
+    --pink: #ff78aa;
+
+    --blue-soft: rgba(98,168,255,.12);
+    --pink-soft: rgba(255,120,170,.12);
+
+    --shadow:
+        0 35px 100px rgba(0,0,0,.40);
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    margin: 0;
+
+    color: var(--text);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 20%,
+            var(--pink-soft),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 20%,
+            var(--blue-soft),
+            transparent 30%
+        ),
+
+        var(--bg);
+
+    overflow-x: hidden;
+
+    transition:
+        background .6s ease,
+        color .6s ease;
+}
+
+
+body::before {
+
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(255,255,255,.30),
+            transparent 42%
+        );
+
+    opacity: .8;
+}
+
+
+body.dark::before {
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(100,150,255,.07),
+            transparent 45%
+        );
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav {
+
+    position: fixed;
+
+    z-index: 100;
+
+    top: 18px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width:
+        min(1100px, calc(100% - 32px));
+
+    padding:
+        11px 16px 11px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 999px;
+
+    background:
+        var(--surface);
+
+    backdrop-filter:
+        blur(24px);
+
+    -webkit-backdrop-filter:
+        blur(24px);
+
+    box-shadow:
+        0 12px 45px
+        rgba(0,0,0,.08);
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-size: 1.1rem;
+
+    font-weight: 800;
+
+    letter-spacing: -.04em;
+}
+
+
+.logo-box {
+
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 11px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--blue),
+            var(--pink)
+        );
+
+    box-shadow:
+        0 8px 25px
+        rgba(20,115,230,.25);
+}
+
+
+.theme {
+
+    width: 45px;
+    height: 34px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 999px;
+
+    background:
+        var(--surface-solid);
+
+    color:
+        var(--text);
+
+    cursor: pointer;
+
+    transition:
+        transform .25s ease;
+}
+
+
+.theme:hover {
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   HERO / CINEMATIC ZONE
+========================================================= */
+
+/*
+   The hero is intentionally taller than the viewport.
+
+   This creates enough physical scroll distance
+   for the laptop animation to progress smoothly.
+*/
+
+.cinematic {
+    /* Extra scroll room gives each cinematic stage its own breathing space. */
+    height: 230vh;
+    position: relative;
+}
+
+.cinematic-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    isolation: isolate;
+}
+
+/* The hero copy lives on its own layer. It never gets scaled with the laptop. */
+.hero-content {
+    position: absolute;
+    z-index: 8;
+    top: 17%;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    width: min(900px, 90%);
+    text-align: center;
+    pointer-events: none;
+    will-change: transform, opacity, filter;
+}
+
+.eyebrow {
+    margin-bottom: 16px;
+    color: var(--muted);
+    font-size: .72rem;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+}
+
+.hero-content h1 {
+    margin: 0;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: .92;
+    letter-spacing: -.075em;
+    font-weight: 850;
+}
+
+.gradient {
+    background: linear-gradient(100deg, var(--blue), var(--pink));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.hero-text {
+    max-width: 600px;
+    margin: 24px auto;
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: clamp(.95rem, 2vw, 1.08rem);
+}
+
+/* =========================================================
+   LAPTOP WORLD
+========================================================= */
+
+.laptop-world {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1800px;
+    perspective-origin: 50% 48%;
+    transform-style: preserve-3d;
+    z-index: 3;
+}
+
+.ambient-glow {
+    position: absolute;
+    width: 70vw;
+    height: 45vw;
+    max-width: 1000px;
+    max-height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse, var(--pink-soft), transparent 68%);
+    filter: blur(35px);
+    transform: translateY(8vh);
+    transition: transform .1s linear, opacity .1s linear;
+    z-index: 0;
+}
+
+/* =========================================================
+   PIXEL-SAFE LAPTOP CAMERA
+========================================================= */
+
+.laptop {
+    position: relative;
+    width: min(900px, 92vw);
+    aspect-ratio: 16 / 10;
+    transform-style: preserve-3d;
+    transform-origin: 50% 52%;
+    transform: translate3d(0, var(--moveY, 10vh), 0)
+               rotateX(var(--rx, 12deg))
+               rotateY(var(--ry, 0deg))
+               scale(var(--scale, .70));
+    opacity: 0;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    contain: layout style paint;
+}
+
+.screen-shell {
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 78%;
+    padding: 12px;
+    border-radius: 25px 25px 10px 10px;
+    background: linear-gradient(145deg, #363c46, #080b10);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.13),
+                0 35px 60px rgba(0,0,0,.20);
+    overflow: hidden;
+}
+
+.screen {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 15px 15px 5px 5px;
+    background: radial-gradient(circle at 50% 0%, rgba(255,255,255,.95), transparent 38%),
+                linear-gradient(145deg, #eef3f8, #dce6f1);
+    /* Keep this layer vector/HTML and never intentionally magnify it beyond 1.55x. */
+    backface-visibility: hidden;
+}
+
+body.dark .screen {
+    background: radial-gradient(circle at 50% 0%, rgba(98,168,255,.15), transparent 38%),
+                linear-gradient(145deg, #151c27, #090e15);
+}
+
+.screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 25% 45%, var(--pink-soft), transparent 28%),
+                radial-gradient(circle at 75% 50%, var(--blue-soft), transparent 30%);
+}
+
+.screen-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen-logo {
+    font-size: clamp(1.4rem, 3vw, 2.5rem);
+    font-weight: 850;
+    letter-spacing: -.055em;
+}
+
+.tagline {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    color: var(--muted);
+    font-size: .6rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   CHOICES
+========================================================= */
+
+.choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(170px, 230px));
+    gap: 18px;
+}
+
+.choice {
+    min-height: 150px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.72);
+    border-radius: 22px;
+    background: rgba(255,255,255,.45);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 15px 35px rgba(30,50,80,.08);
+    transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, border-color .4s ease;
+}
+
+body.dark .choice {
+    background: rgba(20,27,38,.48);
+    border-color: rgba(255,255,255,.10);
+}
+
+.choice:hover {
+    transform: translateY(-12px) scale(1.035);
+    box-shadow: 0 28px 55px rgba(20,30,50,.18);
+}
+
+.choice-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    font-size: 1.25rem;
+}
+
+.online .choice-icon { color: var(--blue); background: var(--blue-soft); }
+.offline .choice-icon { color: var(--pink); background: var(--pink-soft); }
+.choice strong { font-size: 1.03rem; }
+.choice small { margin-top: 6px; color: var(--muted); text-align: center; }
+
+/* =========================================================
+   LAPTOP BASE
+========================================================= */
+
+.base {
+    position: absolute;
+    left: 3%;
+    right: 3%;
+    bottom: 2%;
+    height: 25%;
+    background: linear-gradient(180deg, #b6bdc6, #707985);
+    clip-path: polygon(5% 0, 95% 0, 100% 70%, 96% 100%, 4% 100%, 0 70%);
+    border-radius: 5px 5px 28px 28px;
+    box-shadow: 0 25px 25px rgba(0,0,0,.18);
+}
+
+.trackpad {
+    position: absolute;
+    width: 24%;
+    height: 38%;
+    left: 38%;
+    top: 20%;
+    border-radius: 12px;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.16);
+}
+
+/* =========================================================
+   SCREEN-ENTRY PORTAL
+
+   This is deliberately a separate, full-resolution HTML layer.
+   We cross-fade to it before the laptop would need an extreme
+   scale. That prevents text from becoming a giant rasterized layer.
+========================================================= */
+
+.screen-portal {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: grid;
+    place-items: center;
+    padding: 110px 28px 70px;
+    opacity: 0;
+    transform: scale(.985);
+    pointer-events: none;
+    will-change: opacity, transform;
+}
+
+.portal-inner {
+    width: min(1120px, 94vw);
+    min-height: min(620px, 72vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(28px, 5vw, 70px);
+    border: 1px solid var(--border);
+    border-radius: 38px;
+    background: var(--surface-solid);
+    box-shadow: 0 35px 100px rgba(30,45,80,.13);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+.portal-logo {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 850;
+    letter-spacing: -.055em;
+}
+
+.portal-tagline {
+    margin: 10px 0 34px;
+    color: var(--muted);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-size: .72rem;
+}
+
+.portal-choices {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 300px));
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.portal-choice {
+    min-height: 190px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--surface);
+    box-shadow: 0 18px 50px rgba(30,50,80,.08);
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+.portal-choice:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 28px 70px rgba(30,50,80,.14);
+}
+
+.portal-choice .choice-icon {
+    width: 58px;
+    height: 58px;
+    margin-bottom: 15px;
+}
+
+.portal-choice strong { font-size: 1.15rem; }
+.portal-choice small { margin-top: 8px; color: var(--muted); }
+
+/* Portal gets fully interactive only when the laptop has faded away. */
+.screen-portal.is-live { pointer-events: auto; }
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator {
+
+    position: absolute;
+
+    z-index: 8;
+
+    bottom: 28px;
+
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    color:
+        var(--muted);
+
+    font-size: .72rem;
+
+    letter-spacing: .16em;
+
+    text-transform: uppercase;
+
+    transition:
+        opacity .15s linear;
+}
+
+
+/* =========================================================
+   NORMAL SECTIONS
+========================================================= */
+
+.section {
+
+    min-height: 80svh;
+
+    padding:
+        120px 24px;
+
+    display: grid;
+
+    place-items: center;
+}
+
+
+.section-inner {
+
+    width:
+        min(1100px,100%);
+}
+
+
+.reveal {
+
+    opacity: 0;
+
+    transform:
+        translateY(55px)
+        scale(.97);
+
+    transition:
+        opacity .8s ease,
+        transform .8s ease;
+}
+
+
+.reveal.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+.section h2 {
+
+    margin: 0;
+
+    font-size:
+        clamp(2.5rem,6vw,5rem);
+
+    line-height: .98;
+
+    letter-spacing: -.065em;
+}
+
+
+.section-description {
+
+    max-width: 620px;
+
+    color:
+        var(--muted);
+
+    line-height: 1.7;
+}
+
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 24px;
+
+    margin-top: 50px;
+}
+
+
+.card {
+
+    min-height: 300px;
+
+    padding: 35px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 28px;
+
+    background:
+        var(--surface);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        var(--shadow);
+
+    transition:
+        transform .45s ease,
+        border-color .45s ease;
+}
+
+
+.card:hover {
+
+    transform:
+        translateY(-8px);
+}
+
+
+.card-number {
+
+    color:
+        var(--muted);
+
+    font-size: .7rem;
+
+    letter-spacing: .2em;
+
+    text-transform: uppercase;
+}
+
+
+.card h3 {
+
+    margin-top: 55px;
+
+    font-size: 2rem;
+
+    letter-spacing: -.04em;
+}
+
+
+.card p {
+
+    max-width: 430px;
+
+    color:
+        var(--muted);
+
+    line-height: 1.7;
+}
+
+
+.pill {
+
+    display: inline-block;
+
+    margin-top: 20px;
+
+    padding:
+        9px 14px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 999px;
+
+    background:
+        var(--surface-solid);
+
+    color:
+        var(--muted);
+
+    font-size: .78rem;
+}
+
+
+/* =========================================================
+   FINAL
+========================================================= */
+
+.final {
+
+    min-height: 65svh;
+
+    text-align: center;
+}
+
+
+.final p {
+
+    max-width: 550px;
+
+    margin:
+        25px auto;
+
+    color:
+        var(--muted);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    padding:
+        30px 24px;
+
+    border-top:
+        1px solid
+        var(--border);
+
+    color:
+        var(--muted);
+
+    font-size: .8rem;
+}
+
+
+.footer-inner {
+
+    width:
+        min(1100px,100%);
+
+    margin: auto;
+
+    display: flex;
+
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:760px) {
+
+    .nav {
+
+        top: 10px;
+
+        width:
+            calc(100% - 20px);
+    }
+
+
+    /*
+       On mobile we shorten the cinematic area
+       and keep the laptop readable.
+    */
+
+    .cinematic {
+        height: 175vh;
+    }
+
+
+    .hero-content {
+
+        top: 14%;
+    }
+
+
+    .hero-content h1 {
+
+        font-size:
+            clamp(3rem,14vw,5rem);
+    }
+
+
+    .hero-text {
+
+        font-size: .92rem;
+    }
+
+
+    .laptop {
+        width: 105vw;
+        /* JS owns the camera transform; mobile only changes the physical size. */
+    }
+
+    .screen-portal {
+        padding: 90px 14px 50px;
+    }
+
+    .portal-inner {
+        width: 94vw;
+        min-height: 0;
+        padding: 34px 18px;
+        border-radius: 28px;
+    }
+
+    .portal-choices {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .portal-choice {
+        min-height: 145px;
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+
+    .screen-shell {
+
+        left: 2%;
+        right: 2%;
+
+        padding: 8px;
+
+        border-radius:
+            16px 16px 7px 7px;
+    }
+
+
+    .screen {
+
+        border-radius:
+            10px 10px 4px 4px;
+    }
+
+
+    .screen-logo {
+
+        font-size: 1.25rem;
+    }
+
+
+    .tagline {
+
+        font-size: .42rem;
+
+        margin-bottom: 14px;
+    }
+
+
+    .choices {
+
+        width: 90%;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap: 9px;
+    }
+
+
+    .choice {
+
+        min-height: 112px;
+
+        padding: 10px;
+
+        border-radius: 15px;
+    }
+
+
+    .choice-icon {
+
+        width: 34px;
+        height: 34px;
+
+        margin-bottom: 7px;
+
+        border-radius: 11px;
+
+        font-size: .9rem;
+    }
+
+
+    .choice strong {
+
+        font-size: .76rem;
+    }
+
+
+    .choice small {
+
+        font-size: .55rem;
+    }
+
+
+    .section {
+
+        padding:
+            90px 20px;
+    }
+
+
+    .cards {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .card {
+
+        min-height: 260px;
+
+        padding: 28px;
+    }
+
+
+    .footer-inner {
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+/* Never allow accidental horizontal overflow from the cinematic world. */
+html, body {
+    overflow-x: clip;
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        transition-duration:
+            .01ms !important;
+    }
+}
+
+</style>
 </head>
+
 
 <body>
 
-<!-- =====================================================
+
+<!-- =======================================================
      NAVIGATION
-===================================================== -->
+======================================================= -->
 
 <header class="nav">
 
     <a
-        href="#home"
+        href="#"
         class="logo"
-        aria-label="OFF4Apps Home"
-    >
+        aria-label="OFF4Apps home">
 
         <span class="logo-box">
             O4
@@ -57,131 +1140,118 @@
         class="theme"
         id="themeButton"
         type="button"
-        aria-label="Switch theme"
-    >
+        aria-label="Switch between light and dark mode">
+
         ☼
+
     </button>
 
 </header>
 
 
-<!-- =====================================================
+
+<!-- =======================================================
      CINEMATIC HERO
-===================================================== -->
+======================================================= -->
 
 <section
     class="cinematic"
-    id="home"
->
+    id="home">
+
 
     <div class="cinematic-sticky">
 
 
-        <!-- Atmospheric background -->
+        <!-- Ambient background -->
 
         <div
-            class="ambient ambient-pink"
-            id="ambientPink"
-        ></div>
-
-        <div
-            class="ambient ambient-blue"
-            id="ambientBlue"
-        ></div>
-
-        <div
-            class="ambient ambient-white"
-            id="ambientWhite"
-        ></div>
-
-
-        <!-- Background grid -->
-
-        <div class="background-grid"></div>
+            class="ambient-glow"
+            id="ambientGlow">
+        </div>
 
 
         <!-- Hero text -->
 
         <div
             class="hero-content"
-            id="heroContent"
-        >
+            id="heroContent">
 
             <div class="eyebrow">
-                SIMPLE · USEFUL · RELIABLE
+
+                Simple · Useful · Reliable
+
             </div>
 
+
             <h1>
-                Apps for a
-                <br>
+
+                Apps for a<br>
 
                 <span class="gradient">
                     Calmer Digital Life.
                 </span>
+
             </h1>
 
+
             <p class="hero-text">
+
                 Useful applications with a special focus
                 on offline tools — designed to keep things
                 simple, capable and under your control.
+
             </p>
 
         </div>
 
 
-        <!-- =================================================
-             LAPTOP WORLD
-        ================================================== -->
+
+        <!-- Laptop -->
 
         <div
             class="laptop-world"
-            id="laptopWorld"
-        >
-
-            <div
-                class="laptop-shadow"
-                id="laptopShadow"
-            ></div>
+            id="laptopWorld">
 
 
             <div
                 class="laptop"
-                id="laptop"
-            >
+                id="laptop">
 
-                <!-- Screen -->
+
+                <!-- Laptop screen -->
 
                 <div class="screen-shell">
 
                     <div class="screen">
 
-                        <div class="screen-glow"></div>
 
                         <div class="screen-content">
 
 
                             <div class="screen-logo">
+
                                 OFF4<span class="gradient">
                                     Apps
                                 </span>
+
                             </div>
 
 
                             <div class="tagline">
-                                SIMPLE APPS · A BETTER TOMORROW
+
+                                Simple Apps · A Better Tomorrow
+
                             </div>
 
+
+                            <!-- Choices -->
 
                             <div class="choices">
 
 
-                                <!-- Online -->
-
                                 <a
                                     href="#online"
-                                    class="choice online"
-                                    data-choice="online"
-                                >
+                                    class="choice online">
 
                                     <div class="choice-icon">
                                         ◉
@@ -195,20 +1265,12 @@
                                         When you need to connect.
                                     </small>
 
-                                    <span class="choice-arrow">
-                                        →
-                                    </span>
-
                                 </a>
 
 
-                                <!-- Offline -->
-
                                 <a
                                     href="#offline"
-                                    class="choice offline"
-                                    data-choice="offline"
-                                >
+                                    class="choice offline">
 
                                     <div class="choice-icon">
                                         ◌
@@ -222,34 +1284,17 @@
                                         Powerful tools without internet.
                                     </small>
 
-                                    <span class="choice-arrow">
-                                        →
-                                    </span>
-
                                 </a>
 
 
                             </div>
-
-
-                            <div class="screen-status">
-
-                                <span>
-                                    OFF4Apps
-                                </span>
-
-                                <span>
-                                    Select a world
-                                </span>
-
-                            </div>
-
 
                         </div>
 
                     </div>
 
                 </div>
+
 
 
                 <!-- Laptop base -->
@@ -260,47 +1305,46 @@
 
                 </div>
 
+
             </div>
 
         </div>
 
+        <!-- Portal intentionally disabled in Phase 2.4.
+             We will build the screen-entry transition after the first-stage layout is stable. -->
 
-        <!-- Cinematic vignette -->
+
+        <!-- Cinematic overlay -->
 
         <div
             class="cinematic-overlay"
-            id="cinematicOverlay"
-        ></div>
+            id="cinematicOverlay">
+        </div>
 
-
-        <!-- Scroll indicator -->
 
         <div
             class="scroll-indicator"
-            id="scrollIndicator"
-        >
+            id="scrollIndicator">
 
-            <span class="scroll-line"></span>
-
-            <span>
-                Scroll to enter
-            </span>
+            Scroll to enter ↓
 
         </div>
+
 
     </div>
 
 </section>
 
 
-<!-- =====================================================
-     OFFLINE APPS
-===================================================== -->
+
+<!-- =======================================================
+     OFFLINE
+======================================================= -->
 
 <section
     class="section"
-    id="offline"
->
+    id="offline">
+
 
     <div class="section-inner">
 
@@ -308,26 +1352,32 @@
         <div class="reveal">
 
             <div class="eyebrow">
-                01 · OFFLINE FIRST
+                01 · Offline First
             </div>
 
+
             <h2>
-                More control.
-                <br>
+
+                More control.<br>
 
                 <span class="gradient">
                     Less dependency.
                 </span>
+
             </h2>
 
+
             <p class="section-description">
+
                 Applications designed to remain useful
                 when you're disconnected, travelling,
                 conserving data or simply choosing to
                 work without the internet.
+
             </p>
 
         </div>
+
 
 
         <div class="cards">
@@ -336,22 +1386,23 @@
             <article class="card reveal">
 
                 <div class="card-number">
-                    OFFLINE APPS
+                    Offline Apps
                 </div>
 
-                <div class="card-icon">
-                    ↓
-                </div>
 
                 <h3>
                     Work without the web.
                 </h3>
 
+
                 <p>
+
                     Tools designed to perform their core
                     purpose without requiring an internet
                     connection.
+
                 </p>
+
 
                 <span class="pill">
                     No internet required
@@ -360,24 +1411,26 @@
             </article>
 
 
+
             <article class="card reveal">
 
                 <div class="card-number">
-                    OFF4APPS APPROACH
+                    OFF4Apps approach
                 </div>
 
-                <div class="card-icon">
-                    ✦
-                </div>
 
                 <h3>
                     Simple by design.
                 </h3>
 
+
                 <p>
+
                     Useful applications without unnecessary
                     complexity or distractions.
+
                 </p>
+
 
                 <span class="pill">
                     Useful · Lightweight · Focused
@@ -393,14 +1446,15 @@
 </section>
 
 
-<!-- =====================================================
-     ONLINE APPS
-===================================================== -->
+
+<!-- =======================================================
+     ONLINE
+======================================================= -->
 
 <section
     class="section"
-    id="online"
->
+    id="online">
+
 
     <div class="section-inner">
 
@@ -408,81 +1462,56 @@
         <div class="reveal">
 
             <div class="eyebrow">
-                02 · ONLINE APPS
+                02 · Online Apps
             </div>
 
+
             <h2>
-                Connected
-                <br>
+
+                Connected<br>
 
                 <span class="gradient">
                     when needed.
                 </span>
+
             </h2>
 
+
             <p class="section-description">
+
                 Online applications have their place too.
                 Useful connected tools when an internet
                 connection is actually part of the experience.
+
             </p>
 
         </div>
 
 
-        <div class="cards">
+
+        <div class="card reveal">
+
+            <div class="card-number">
+                Online Apps
+            </div>
 
 
-            <article class="card reveal">
-
-                <div class="card-number">
-                    ONLINE APPS
-                </div>
-
-                <div class="card-icon">
-                    ◉
-                </div>
-
-                <h3>
-                    Connected when useful.
-                </h3>
-
-                <p>
-                    Online tools built around situations
-                    where connectivity genuinely adds value.
-                </p>
-
-                <span class="pill">
-                    Connected tools
-                </span>
-
-            </article>
+            <h3>
+                Different tools. Same philosophy.
+            </h3>
 
 
-            <article class="card reveal">
+            <p>
 
-                <div class="card-number">
-                    SAME PHILOSOPHY
-                </div>
+                Useful first. Simple second.
+                No unnecessary distractions.
 
-                <div class="card-icon">
-                    →
-                </div>
+            </p>
 
-                <h3>
-                    Different tools. Same philosophy.
-                </h3>
 
-                <p>
-                    Useful first. Simple second.
-                    No unnecessary distractions.
-                </p>
-
-                <span class="pill">
-                    Useful · Simple · Focused
-                </span>
-
-            </article>
-
+            <span class="pill">
+                Explore connected tools →
+            </span>
 
         </div>
 
@@ -491,31 +1520,38 @@
 </section>
 
 
-<!-- =====================================================
+
+<!-- =======================================================
      FINAL
-===================================================== -->
+======================================================= -->
 
 <section class="section final">
 
     <div class="section-inner reveal">
 
+
         <div class="eyebrow">
-            OFF4APPS
+            OFF4Apps
         </div>
 
+
         <h2>
-            Technology should
-            <br>
+
+            Technology should<br>
 
             <span class="gradient">
                 feel lighter.
             </span>
+
         </h2>
 
+
         <p>
+
             Simple applications.
             Thoughtful experiences.
             A quieter way to use technology.
+
         </p>
 
     </div>
@@ -523,9 +1559,10 @@
 </section>
 
 
-<!-- =====================================================
+
+<!-- =======================================================
      FOOTER
-===================================================== -->
+======================================================= -->
 
 <footer>
 
@@ -544,7 +1581,376 @@
 </footer>
 
 
-<script src="script.js"></script>
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   THEME
+========================================================= */
+
+const themeButton =
+    document.getElementById(
+        "themeButton"
+    );
+
+
+const savedTheme =
+    localStorage.getItem(
+        "off4apps-theme"
+    );
+
+
+if (savedTheme === "dark") {
+
+    document.body.classList.add(
+        "dark"
+    );
+
+}
+
+
+function updateThemeButton() {
+
+    themeButton.textContent =
+        document.body.classList.contains("dark")
+            ? "☾"
+            : "☼";
+
+}
+
+
+updateThemeButton();
+
+
+themeButton.addEventListener(
+    "click",
+    () => {
+
+        document.body.classList.toggle(
+            "dark"
+        );
+
+
+        localStorage.setItem(
+            "off4apps-theme",
+
+            document.body.classList.contains("dark")
+                ? "dark"
+                : "light"
+        );
+
+
+        updateThemeButton();
+
+    }
+);
+
+
+
+/* =========================================================
+   CINEMATIC SCROLL ENGINE — PHASE 2.4
+   STAGE 1: TEXT FIRST
+   STAGE 2: TEXT FADES COMPLETELY
+   STAGE 3: LAPTOP APPEARS
+   STAGE 4: LAPTOP APPROACHES
+========================================================= */
+
+const cinematic = document.getElementById("home");
+const laptop = document.getElementById("laptop");
+const heroContent = document.getElementById("heroContent");
+const ambientGlow = document.getElementById("ambientGlow");
+const cinematicOverlay = document.getElementById("cinematicOverlay");
+const scrollIndicator = document.getElementById("scrollIndicator");
+
+let animationFrame = null;
+
+function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+}
+
+function smoothstep(t) {
+    t = clamp(t, 0, 1);
+    return t * t * (3 - 2 * t);
+}
+
+function updateCinematic() {
+    const totalDistance = Math.max(
+        1,
+        cinematic.offsetHeight - window.innerHeight
+    );
+
+    const progress = clamp(
+        window.scrollY / totalDistance,
+        0,
+        1
+    );
+
+    /*
+       TIMELINE
+
+       0.00 → 0.22
+       Text is completely stable.
+
+       0.22 → 0.42
+       Text fades away.
+
+       0.42 → 0.62
+       Laptop gently appears.
+
+       0.62 → 0.92
+       Laptop makes the actual camera move.
+
+       0.92 → 1.00
+       Hold the composed laptop state.
+
+       The laptop never receives a giant scale.
+       This keeps the HTML interface sharp.
+    */
+
+    /* ---------------------------------------------------------
+       1. HERO TEXT — FIRST THING THE USER SEES
+    --------------------------------------------------------- */
+
+    const textFade = smoothstep(
+        clamp((progress - 0.22) / 0.20, 0, 1)
+    );
+
+    const heroOpacity = 1 - textFade;
+
+    /*
+       Move the text only slightly while fading.
+       No blur-heavy animation — this keeps typography clean.
+    */
+    const heroY = -18 * textFade;
+
+    heroContent.style.opacity = heroOpacity.toFixed(3);
+    heroContent.style.transform =
+        `translate3d(-50%, ${heroY.toFixed(1)}px, 0)`;
+
+    /* ---------------------------------------------------------
+       2. LAPTOP — DOES NOT EXIST VISUALLY UNTIL TEXT IS GONE
+    --------------------------------------------------------- */
+
+    const laptopEntry = smoothstep(
+        clamp((progress - 0.40) / 0.22, 0, 1)
+    );
+
+    /*
+       Starts small and slightly low.
+       It becomes visible only after the hero text has faded.
+    */
+    const cameraProgress = smoothstep(
+        clamp((progress - 0.40) / 0.60, 0, 1)
+    );
+
+    const scale =
+        0.68 +
+        cameraProgress * 0.64;          // 0.68 → 1.32
+
+    const moveY =
+        10 -
+        cameraProgress * 8;              // 10vh → 2vh
+
+    const rotX =
+        12 -
+        cameraProgress * 10;             // 12deg → 2deg
+
+    const rotY =
+        -1.2 +
+        cameraProgress * 1.2;             // -1.2deg → 0deg
+
+    laptop.style.opacity = laptopEntry.toFixed(3);
+
+    laptop.style.transform =
+        `translate3d(0, ${moveY.toFixed(2)}vh, 0) ` +
+        `rotateX(${rotX.toFixed(2)}deg) ` +
+        `rotateY(${rotY.toFixed(2)}deg) ` +
+        `scale(${scale.toFixed(4)})`;
+
+    /* ---------------------------------------------------------
+       3. AMBIENT BACKGROUND
+    --------------------------------------------------------- */
+
+    ambientGlow.style.transform =
+        `translateY(${(8 - cameraProgress * 7).toFixed(2)}vh) ` +
+        `scale(${(1 + cameraProgress * 0.28).toFixed(3)})`;
+
+    ambientGlow.style.opacity =
+        (0.55 + cameraProgress * 0.25).toFixed(3);
+
+    cinematicOverlay.style.setProperty(
+        "--vignette",
+        (cameraProgress * 0.10).toFixed(3)
+    );
+
+    /* ---------------------------------------------------------
+       4. SCROLL INDICATOR
+    --------------------------------------------------------- */
+
+    scrollIndicator.style.opacity =
+        clamp(1 - progress * 6, 0, 1).toFixed(3);
+
+    animationFrame = null;
+}
+
+function requestCinematicUpdate() {
+    if (!animationFrame) {
+        animationFrame = requestAnimationFrame(updateCinematic);
+    }
+}
+
+window.addEventListener(
+    "scroll",
+    requestCinematicUpdate,
+    { passive: true }
+);
+
+window.addEventListener(
+    "resize",
+    requestCinematicUpdate
+);
+
+updateCinematic();
+
+/* =========================================================
+   DESKTOP POINTER DEPTH
+========================================================= */
+
+const finePointer =
+    window.matchMedia(
+        "(pointer:fine)"
+    );
+
+
+if (finePointer.matches) {
+
+
+    const laptopWorld =
+        document.getElementById(
+            "laptopWorld"
+        );
+
+
+    laptopWorld.addEventListener(
+        "pointermove",
+        (event) => {
+
+
+            const rect =
+                laptopWorld.getBoundingClientRect();
+
+
+            const x =
+                (
+                    event.clientX -
+                    rect.left
+                )
+                /
+                rect.width
+                -
+                .5;
+
+
+            const y =
+                (
+                    event.clientY -
+                    rect.top
+                )
+                /
+                rect.height
+                -
+                .5;
+
+
+            laptop.style.setProperty(
+                "--ry",
+                `${x * 4}deg`
+            );
+
+
+            laptop.style.setProperty(
+                "--rx",
+                `${y * -2.5}deg`
+            );
+
+        }
+    );
+
+
+    laptopWorld.addEventListener(
+        "pointerleave",
+        () => {
+
+            laptop.style.setProperty(
+                "--ry",
+                "0deg"
+            );
+
+
+            laptop.style.setProperty(
+                "--rx",
+                "0deg"
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   SECTION REVEALS
+========================================================= */
+
+const observer =
+    new IntersectionObserver(
+
+        (entries) => {
+
+            entries.forEach(
+                (entry) => {
+
+                    if (
+                        entry.isIntersecting
+                    ) {
+
+                        entry.target
+                            .classList
+                            .add(
+                                "visible"
+                            );
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold: .15
+        }
+
+    );
+
+
+document
+    .querySelectorAll(
+        ".reveal"
+    )
+    .forEach(
+        element =>
+            observer.observe(
+                element
+            )
+    );
+
+
+</script>
 
 </body>
 </html>
