@@ -1,110 +1,74 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="day">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>OFF4Apps</title>
-<meta name="description" content="OFF4Apps — a calm home for offline-first and online applications.">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="OFF4Apps — simple apps for a better tomorrow.">
+  <title>OFF4Apps</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<header class="topbar">
+  <div class="brand">OFF4Apps</div>
+  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to night mode">
+    <span class="sun">☀</span><span class="moon">☾</span>
+  </button>
+</header>
 
-  <!-- Persistent minimal chrome: brand mark + day/night toggle -->
-  <div class="chrome">
-    <span class="chrome-mark">OFF4Apps</span>
-    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to night mode">
-      <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="4.2"></circle>
-        <g class="sun-rays">
-          <line x1="12" y1="1.5" x2="12" y2="4.2"></line>
-          <line x1="12" y1="19.8" x2="12" y2="22.5"></line>
-          <line x1="1.5" y1="12" x2="4.2" y2="12"></line>
-          <line x1="19.8" y1="12" x2="22.5" y2="12"></line>
-          <line x1="4.3" y1="4.3" x2="6.2" y2="6.2"></line>
-          <line x1="17.8" y1="17.8" x2="19.7" y2="19.7"></line>
-          <line x1="4.3" y1="19.7" x2="6.2" y2="17.8"></line>
-          <line x1="17.8" y1="6.2" x2="19.7" y2="4.3"></line>
-        </g>
-      </svg>
-      <svg class="icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20.2 14.6A8.6 8.6 0 0 1 9.4 3.8a8.8 8.8 0 1 0 10.8 10.8Z"></path>
-      </svg>
-    </button>
-  </div>
+<main>
+  <section class="cinematic-track" id="cinematicTrack">
+    <div class="cinematic-stage">
+      <div class="ambient ambient-blue"></div>
+      <div class="ambient ambient-pink"></div>
+      <div class="floor-glow"></div>
+      <div class="vignette" id="vignette"></div>
 
-  <!-- The scroll track that drives the cinematic camera-move-in effect.
-       Its height determines how much physical scrolling maps to the
-       full 0 -> 1 camera journey. Everything visual is a function of
-       scroll position, computed and applied in script.js. -->
-  <section class="hero-track" id="hero-track">
-    <div class="hero-stage" id="hero-stage">
-
-      <!-- Darkens toward the edges as the camera pushes in, to sell depth -->
-      <div class="depth-vignette" id="depth-vignette" aria-hidden="true"></div>
-
-      <div class="ambient-layer" aria-hidden="true">
-        <span class="blob blob-blue" id="blob-blue"></span>
-        <span class="blob blob-pink" id="blob-pink"></span>
-        <span class="floor-glow"></span>
-      </div>
-
-      <div class="laptop-scene" id="laptop-scene">
-        <div class="laptop-rig" id="laptop-rig">
-
+      <div class="camera-space">
+        <div class="laptop-rig" id="laptopRig">
           <div class="laptop">
-            <div class="laptop-lid">
-              <span class="camera-dot" aria-hidden="true"></span>
+            <div class="lid">
+              <div class="camera-dot"></div>
+              <div class="screen">
+                <div class="screen-content">
+                  <section class="panel active" data-panel="home">
+                    <div class="screen-brand">OFF4Apps</div>
+                    <div class="tagline">SIMPLE APPS. A BETTER TOMORROW.</div>
+                    <div class="choices">
+                      <button class="choice offline" data-open="offline">Offline Apps</button>
+                      <button class="choice online" data-open="online">Online Apps</button>
+                    </div>
+                  </section>
 
-              <div class="screen-inner" id="screen-inner">
+                  <section class="panel" data-panel="offline">
+                    <div class="panel-title">Offline Apps</div>
+                    <p>Offline-first applications will be showcased here.</p>
+                    <button class="back" data-open="home">Back</button>
+                  </section>
 
-                <div class="screen-panel is-active" id="panel-choices">
-                  <p class="wordmark">OFF4Apps</p>
-                  <p class="tagline">Quiet, dependable apps &mdash; built to work whether or not you're online.</p>
-                  <div class="choice-row">
-                    <button class="choice-btn" type="button" data-target="offline">Offline Apps</button>
-                    <button class="choice-btn" type="button" data-target="online">Online Apps</button>
-                  </div>
+                  <section class="panel" data-panel="online">
+                    <div class="panel-title">Online Apps</div>
+                    <p>Connected applications will be showcased here.</p>
+                    <button class="back" data-open="home">Back</button>
+                  </section>
                 </div>
-
-                <div class="screen-panel" id="panel-offline">
-                  <p class="panel-eyebrow">Offline Apps</p>
-                  <p class="panel-copy">This room of OFF4Apps is still being furnished. Offline-first apps will be showcased here soon.</p>
-                  <button class="back-btn" type="button" data-target="choices">Back</button>
-                </div>
-
-                <div class="screen-panel" id="panel-online">
-                  <p class="panel-eyebrow">Online Apps</p>
-                  <p class="panel-copy">This room of OFF4Apps is still being furnished. Connected apps will be showcased here soon.</p>
-                  <button class="back-btn" type="button" data-target="choices">Back</button>
-                </div>
-
+                <div class="reflection"></div>
               </div>
-
-              <span class="screen-glow" id="screen-glow" aria-hidden="true"></span>
             </div>
-
-            <div class="laptop-hinge" aria-hidden="true"></div>
-
-            <div class="laptop-base" aria-hidden="true">
-              <span class="trackpad"></span>
-            </div>
+            <div class="hinge"></div>
+            <div class="base"><div class="trackpad"></div></div>
           </div>
-
-          <div class="laptop-shadow" id="laptop-shadow" aria-hidden="true"></div>
+          <div class="shadow"></div>
         </div>
       </div>
 
-      <div class="scroll-cue" id="scroll-cue" aria-hidden="true">
-        <span>Scroll</span>
-        <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+      <div class="scroll-cue" id="scrollCue">
+        <span>SCROLL</span>
+        <i></i>
       </div>
-
     </div>
   </section>
+</main>
 
-  <!-- Natural resting point after the cinematic entry; content lands here in a later phase -->
-  <section class="rest-note" aria-hidden="true"></section>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
