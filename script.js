@@ -1,218 +1,528 @@
 (() => {
   "use strict";
 
-  /* ============================================================
-     THEME (day / night)
-     ============================================================ */
-  const root = document.documentElement;
-  const toggleBtn = document.getElementById("theme-toggle");
-  const THEME_KEY = "off4apps-theme";
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
 
-  function applyTheme(theme) {
-    root.setAttribute("data-theme", theme);
-    toggleBtn.setAttribute("aria-pressed", theme === "night" ? "true" : "false");
-    toggleBtn.setAttribute("aria-label", theme === "night" ? "Switch to day mode" : "Switch to night mode");
+  const html = document.documentElement;
+
+  const track =
+    document.getElementById("cinematicTrack");
+
+  const laptop =
+    document.getElementById("laptopRig");
+
+  const scrollCue =
+    document.getElementById("scrollCue");
+
+  const themeToggle =
+    document.getElementById("themeToggle");
+
+  const themeIcon =
+    document.getElementById("themeIcon");
+
+  const choiceCards =
+    document.querySelectorAll(".choice-card");
+
+  const ambientOne =
+    document.querySelector(".ambient-one");
+
+  const ambientTwo =
+    document.querySelector(".ambient-two");
+
+  const ambientThree =
+    document.querySelector(".ambient-three");
+
+
+  /* =====================================================
+     SAFETY CHECK
+  ===================================================== */
+
+  if (!track || !laptop) {
+    console.error(
+      "OFF4Apps: Required cinematic elements are missing."
+    );
+
+    return;
   }
 
-  let storedTheme = null;
-  try { storedTheme = localStorage.getItem(THEME_KEY); } catch (e) { /* storage unavailable, ignore */ }
-  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  applyTheme(storedTheme || (prefersDark ? "night" : "day"));
 
-  toggleBtn.addEventListener("click", () => {
-    const next = root.getAttribute("data-theme") === "night" ? "day" : "night";
-    applyTheme(next);
-    try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
-  });
+  /* =====================================================
+     THEME
+  ===================================================== */
 
-  /* ============================================================
-     CINEMATIC CAMERA
-     Architecture: SCROLL POSITION -> CAMERA STATE -> VISUAL STATE
+  const savedTheme =
+    localStorage.getItem("off4apps-theme");
 
-     1. getProgress()      reads the scroll position and turns it
-                            into a single number from 0 (top) to 1
-                            (fully scrolled through the hero track).
-     2. deriveCameraState() turns that number into concrete camera
-                            values (perspective, depth, tilt, drift).
-                            This is a pure function: same progress
-                            always produces the same state, with no
-                            memory of time or direction.
-     3. applyCameraState()  writes those values to the DOM.
+  if (savedTheme === "dark") {
 
-     There is no timer, no autoplaying animation, and no easing
-     that lags behind the current frame — every call is a full,
-     immediate re-computation from the live scroll position, so
-     the scene freezes the instant scrolling stops and reverses
-     cleanly when the user scrolls back up.
-     ============================================================ */
+    html.classList.add("dark");
 
-  const heroTrack   = document.getElementById("hero-track");
-  const scene        = document.getElementById("laptop-scene");
-  const rig           = document.getElementById("laptop-rig");
-  const shadow       = document.getElementById("laptop-shadow");
-  const vignette     = document.getElementById("depth-vignette");
-  const glow          = document.getElementById("screen-glow");
-  const blobBlue      = document.getElementById("blob-blue");
-  const blobPink      = document.getElementById("blob-pink");
-  const scrollCue    = document.getElementById("scroll-cue");
+    if (themeIcon) {
+      themeIcon.textContent = "☀";
+    }
 
-  const reduceMotion = window.matchMedia &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } else {
 
-  // Tunable range for the whole journey. Change these numbers to
-  // adjust how dramatic the "camera approaching" effect feels.
-  const CAMERA = {
-    perspectiveFar:  1600,
-    perspectiveNear:  900,
-    translateZFar:    -820,
-    translateZNear:    430,
-    rotateXFar:         26,
-    rotateXNear:         2,
-    translateYFar:      22,
-    translateYNear:     -8,
-    shadowOpacityFar:  .22,
-    shadowOpacityNear: .58,
-    glowOpacityFar:    .25,
-    glowOpacityNear:   .85,
-    vignetteOpacityFar:   0,
-    vignetteOpacityNear: .6,
-  };
+    html.classList.remove("dark");
 
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function clamp01(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-  // Purely a re-shaping of the 0..1 range — still a function of
-  // position only, so it does not introduce any time-based lag.
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  // ---- 1. SCROLL POSITION -> PROGRESS ----
-  function getProgress() {
-    const rect = heroTrack.getBoundingClientRect();
-    const total = heroTrack.offsetHeight - window.innerHeight;
-    if (total <= 0) return 1;
-    return clamp01(-rect.top / total);
-  }
-
-  // ---- 2. PROGRESS -> CAMERA STATE ----
-  function deriveCameraState(progress) {
-    const t = easeInOutCubic(progress);
-    return {
-      raw: progress,
-      perspective: lerp(CAMERA.perspectiveFar, CAMERA.perspectiveNear, t),
-      translateZ:  lerp(CAMERA.translateZFar,  CAMERA.translateZNear,  t),
-      rotateX:     lerp(CAMERA.rotateXFar,     CAMERA.rotateXNear,     t),
-      translateY:  lerp(CAMERA.translateYFar,  CAMERA.translateYNear,  t),
-      shadowOpacity:   lerp(CAMERA.shadowOpacityFar,   CAMERA.shadowOpacityNear,   t),
-      glowOpacity:     lerp(CAMERA.glowOpacityFar,     CAMERA.glowOpacityNear,     t),
-      vignetteOpacity: lerp(CAMERA.vignetteOpacityFar, CAMERA.vignetteOpacityNear, t),
-      // Background elements drift and dissolve faster than the
-      // main journey completes, so they feel "passed" by roughly
-      // the two-thirds mark rather than lingering the whole way.
-      bgT: clamp01(t / 0.7),
-    };
-  }
-
-  // ---- 3. CAMERA STATE -> DOM ----
-  function applyCameraState(state) {
-    scene.style.perspective = state.perspective + "px";
-
-    rig.style.transform =
-      "translateY(" + state.translateY.toFixed(2) + "px) " +
-      "rotateX(" + state.rotateX.toFixed(2) + "deg) " +
-      "translateZ(" + state.translateZ.toFixed(2) + "px)";
-
-    shadow.style.opacity = state.shadowOpacity.toFixed(3);
-    glow.style.opacity = state.glowOpacity.toFixed(3);
-    vignette.style.opacity = state.vignetteOpacity.toFixed(3);
-
-    const bgFade = 1 - state.bgT;
-    blobBlue.style.opacity = (0.55 * bgFade).toFixed(3);
-    blobBlue.style.transform = "translate3d(0, " + (-70 * state.bgT).toFixed(1) + "px, 0) scale(" + (1 - 0.15 * state.bgT).toFixed(3) + ")";
-    blobPink.style.opacity = (0.55 * bgFade).toFixed(3);
-    blobPink.style.transform = "translate3d(0, " + (50 * state.bgT).toFixed(1) + "px, 0) scale(" + (1 - 0.15 * state.bgT).toFixed(3) + ")";
-
-    if (state.raw > 0.03) {
-      scrollCue.classList.add("is-hidden");
-    } else {
-      scrollCue.classList.remove("is-hidden");
+    if (themeIcon) {
+      themeIcon.textContent = "☾";
     }
   }
+
+
+  if (themeToggle) {
+
+    themeToggle.addEventListener(
+      "click",
+      () => {
+
+        const dark =
+          html.classList.toggle("dark");
+
+        localStorage.setItem(
+          "off4apps-theme",
+          dark ? "dark" : "light"
+        );
+
+        if (themeIcon) {
+
+          themeIcon.textContent =
+            dark ? "☀" : "☾";
+        }
+
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     CINEMATIC CAMERA
+     
+     IMPORTANT:
+     
+     Scroll position directly controls
+     cinematic progress.
+
+     No autoplay.
+     No timer.
+     No automatic camera movement.
+  ===================================================== */
+
+  let targetProgress = 0;
+
+  let displayedProgress = 0;
+
+  let ticking = false;
+
+
+  /* =====================================================
+     CLAMP
+  ===================================================== */
+
+  function clamp(
+    value,
+    min,
+    max
+  ) {
+
+    return Math.min(
+      Math.max(value, min),
+      max
+    );
+  }
+
+
+  /* =====================================================
+     SMOOTHSTEP
+  ===================================================== */
+
+  function smoothStep(value) {
+
+    return value * value *
+      (3 - 2 * value);
+  }
+
+
+  /* =====================================================
+     GET SCROLL PROGRESS
+  ===================================================== */
+
+  function calculateProgress() {
+
+    const maxScroll =
+      track.offsetHeight -
+      window.innerHeight;
+
+    if (maxScroll <= 0) {
+      return 0;
+    }
+
+    return clamp(
+      window.scrollY / maxScroll,
+      0,
+      1
+    );
+  }
+
+
+  /* =====================================================
+     UPDATE TARGET
+  ===================================================== */
+
+  function updateTarget() {
+
+    targetProgress =
+      calculateProgress();
+
+    if (!ticking) {
+
+      ticking = true;
+
+      requestAnimationFrame(
+        render
+      );
+    }
+
+  }
+
+
+  /* =====================================================
+     RENDER CAMERA
+  ===================================================== */
 
   function render() {
-    applyCameraState(deriveCameraState(getProgress()));
-  }
 
-  if (reduceMotion) {
-    // No scroll-linked camera move: present a single calm, settled
-    // resting state instead (still fully functional/reachable).
-    applyCameraState(deriveCameraState(1));
-    scrollCue.classList.add("is-hidden");
-  } else {
-    /* --------------------------------------------------------
-       Frame loop, active only while the user is actually
-       scrolling or touching the screen.
+    ticking = false;
 
-       Plain "scroll" event listeners are enough on desktop, but
-       some mobile browsers coalesce/delay scroll events during
-       inertial (momentum) touch scrolling, which makes a purely
-       event-driven animation look stepped. To keep the camera
-       genuinely tied to live scroll position on mobile too, a
-       requestAnimationFrame loop runs for the duration of an
-       active scroll/touch gesture (plus a short settle window),
-       reading real scroll position every frame, then stops
-       itself — so there is no animation running while idle.
-       -------------------------------------------------------- */
-    let looping = false;
-    let idleTimer = null;
 
-    function frame() {
-      render();
-      if (looping) requestAnimationFrame(frame);
+    /* ---------------------------------------------
+       Follow scroll position
+    --------------------------------------------- */
+
+    const difference =
+      targetProgress -
+      displayedProgress;
+
+
+    displayedProgress +=
+      difference * 0.18;
+
+
+    /*
+       Snap when close enough.
+
+       This prevents endless tiny animation.
+    */
+
+    if (
+      Math.abs(
+        targetProgress -
+        displayedProgress
+      ) < 0.0001
+    ) {
+
+      displayedProgress =
+        targetProgress;
     }
 
-    function keepAlive() {
-      if (!looping) {
-        looping = true;
-        requestAnimationFrame(frame);
+
+    /* ---------------------------------------------
+       Camera easing
+    --------------------------------------------- */
+
+    const p =
+      smoothStep(
+        displayedProgress
+      );
+
+
+    /* ---------------------------------------------
+       Camera values
+       
+       Start:
+       - laptop distant
+       - slightly tilted
+       - lower position
+
+       End:
+       - laptop very close
+       - almost straight
+       - slightly higher
+    --------------------------------------------- */
+
+    const scale =
+      0.46 +
+      (3.25 - 0.46) * p;
+
+
+    const translateZ =
+      -40 +
+      (120 + 40) * p;
+
+
+    const translateY =
+      32 +
+      (-12 - 32) * p;
+
+
+    const rotateX =
+      18 +
+      (1 - 18) * p;
+
+
+    const rotateY =
+      -1.2 +
+      (0 + 1.2) * p;
+
+
+    /* ---------------------------------------------
+       Apply camera
+    --------------------------------------------- */
+
+    laptop.style.transform = `
+      translate3d(
+        0,
+        ${translateY}px,
+        ${translateZ}px
+      )
+      rotateX(${rotateX}deg)
+      rotateY(${rotateY}deg)
+      scale(${scale})
+    `;
+
+
+    /* ---------------------------------------------
+       Ambient background movement
+    --------------------------------------------- */
+
+    if (ambientOne) {
+
+      ambientOne.style.transform =
+        `translate3d(
+          ${p * 35}px,
+          ${p * 20}px,
+          0
+        )`;
+
+    }
+
+
+    if (ambientTwo) {
+
+      ambientTwo.style.transform =
+        `translate3d(
+          ${p * -45}px,
+          ${p * -25}px,
+          0
+        )`;
+
+    }
+
+
+    if (ambientThree) {
+
+      ambientThree.style.transform =
+        `translate3d(
+          ${p * 20}px,
+          ${p * -35}px,
+          0
+        )`;
+
+    }
+
+
+    /* ---------------------------------------------
+       Scroll cue fades as camera approaches
+    --------------------------------------------- */
+
+    if (scrollCue) {
+
+      scrollCue.style.opacity =
+        String(
+          clamp(
+            0.75 -
+            displayedProgress * 2.5,
+            0,
+            0.75
+          )
+        );
+
+    }
+
+
+    /* ---------------------------------------------
+       Continue only while needed
+    --------------------------------------------- */
+
+    if (
+      Math.abs(
+        targetProgress -
+        displayedProgress
+      ) > 0.0001
+    ) {
+
+      ticking = true;
+
+      requestAnimationFrame(
+        render
+      );
+    }
+
+  }
+
+
+  /* =====================================================
+     SCROLL LISTENERS
+  ===================================================== */
+
+  window.addEventListener(
+    "scroll",
+    updateTarget,
+    {
+      passive: true
+    }
+  );
+
+
+  window.addEventListener(
+    "resize",
+    updateTarget,
+    {
+      passive: true
+    }
+  );
+
+
+  /* =====================================================
+     INITIAL POSITION
+  ===================================================== */
+
+  targetProgress =
+    calculateProgress();
+
+  displayedProgress =
+    targetProgress;
+
+  render();
+
+
+  /* =====================================================
+     CHOICE CARDS
+     
+     Clicking a laptop option moves
+     the page to the corresponding world.
+  ===================================================== */
+
+  choiceCards.forEach(
+    (card) => {
+
+      card.addEventListener(
+        "click",
+        () => {
+
+          const panel =
+            card.dataset.panel;
+
+          if (!panel) {
+            return;
+          }
+
+
+          const target =
+            document.getElementById(
+              panel
+            );
+
+          if (!target) {
+            return;
+          }
+
+
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+        }
+      );
+
+    }
+  );
+
+
+  /* =====================================================
+     KEYBOARD ACCESSIBILITY
+  ===================================================== */
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (event.key === "Escape") {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
       }
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => {
-        looping = false;
-        render(); // final precise settle at the resting scroll position
-      }, 160);
+
+    }
+  );
+
+
+  /* =====================================================
+     REDUCED MOTION
+  ===================================================== */
+
+  const reducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    );
+
+
+  function handleReducedMotion() {
+
+    if (
+      reducedMotion.matches
+    ) {
+
+      laptop.style.transform = `
+        translate3d(
+          0,
+          0,
+          0
+        )
+        rotateX(0deg)
+        rotateY(0deg)
+        scale(1)
+      `;
+
+    } else {
+
+      updateTarget();
+
     }
 
-    window.addEventListener("scroll", keepAlive, { passive: true });
-    window.addEventListener("touchmove", keepAlive, { passive: true });
-    window.addEventListener("touchstart", keepAlive, { passive: true });
-    window.addEventListener("resize", render);
-
-    render();
   }
 
-  /* ============================================================
-     CHOICE / BACK PANEL SWITCHING
-     ============================================================ */
-  const screenInner = document.getElementById("screen-inner");
-  const panels = {
-    choices: document.getElementById("panel-choices"),
-    offline: document.getElementById("panel-offline"),
-    online: document.getElementById("panel-online"),
-  };
 
-  function showPanel(target) {
-    Object.values(panels).forEach((p) => p.classList.remove("is-active"));
-    const next = panels[target];
-    if (next) next.classList.add("is-active");
+  if (
+    reducedMotion.addEventListener
+  ) {
 
-    screenInner.classList.remove("tint-offline", "tint-online");
-    if (target === "offline") screenInner.classList.add("tint-offline");
-    if (target === "online") screenInner.classList.add("tint-online");
+    reducedMotion.addEventListener(
+      "change",
+      handleReducedMotion
+    );
+
   }
 
-  document.querySelectorAll("[data-target]").forEach((el) => {
-    el.addEventListener("click", () => showPanel(el.getAttribute("data-target")));
-  });
+
+  handleReducedMotion();
+
 })();
