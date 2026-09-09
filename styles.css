@@ -1,11 +1,13 @@
 /* ============================================================
    OFF4Apps — Core cinematic landing experience
-   Plain CSS, no build step. Animations use transform/opacity only.
+   Plain CSS, no build step. All scroll-driven motion is applied
+   as inline styles from script.js (transform / opacity only) —
+   this file defines the resting states and theme tokens.
    ============================================================ */
 
 :root{
   --ease: cubic-bezier(.22,.61,.36,1);
-  --track-length: 260vh;
+  --track-length: 340vh;
 
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
@@ -38,6 +40,7 @@ html[data-theme="day"]{
   --hinge-fill: #B7C2D9;
 
   --floor-glow: radial-gradient(ellipse at center, rgba(140,165,220,.28), rgba(140,165,220,0) 70%);
+  --vignette: radial-gradient(ellipse at 50% 45%, rgba(20,30,55,0) 40%, rgba(30,42,72,.5) 100%);
 }
 
 /* ---------- Night theme ---------- */
@@ -59,11 +62,11 @@ html[data-theme="night"]{
   --pink-soft: #7A4F68;
 
   --lid-fill: linear-gradient(160deg, #232B3E 0%, #171D2C 60%, #10141F 100%);
-  --base-fill: linear-gradient(180deg, #1B2233 0%, #12172400 100%), #12172233;
   --base-fill: linear-gradient(180deg, #1B2233 0%, #121724 100%);
   --hinge-fill: #2A3348;
 
   --floor-glow: radial-gradient(ellipse at center, rgba(90,120,220,.22), rgba(90,120,220,0) 70%);
+  --vignette: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 38%, rgba(0,0,0,.72) 100%);
 }
 
 *, *::before, *::after{ box-sizing: border-box; }
@@ -84,6 +87,11 @@ body{
 }
 
 button{ font-family: inherit; }
+
+@keyframes scene-enter{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
 
 /* ---------- Persistent chrome ---------- */
 .chrome{
@@ -129,6 +137,9 @@ html[data-theme="night"] .icon-sun{ display: none; }
 html[data-theme="night"] .icon-moon{ display: block; }
 
 /* ---------- Scroll track ---------- */
+/* The track is tall; the stage inside it is sticky and fills the
+   viewport. Scrolling through the track's extra height is what
+   produces scroll "distance" for script.js to read as progress. */
 .hero-track{
   position: relative;
   height: var(--track-length);
@@ -136,11 +147,24 @@ html[data-theme="night"] .icon-moon{ display: block; }
 .hero-stage{
   position: sticky;
   top: 0;
+  height: 100vh;
   height: 100svh;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: scene-enter .8s var(--ease) both;
+}
+
+/* ---------- Depth vignette (lighting cue) ---------- */
+.depth-vignette{
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: var(--vignette);
+  opacity: 0;
+  will-change: opacity;
 }
 
 /* ---------- Ambient background ---------- */
@@ -155,7 +179,7 @@ html[data-theme="night"] .icon-moon{ display: block; }
   border-radius: 50%;
   filter: blur(70px);
   opacity: .55;
-  will-change: transform;
+  will-change: transform, opacity;
 }
 .blob-blue{
   width: 46vw; height: 46vw;
@@ -179,6 +203,9 @@ html[data-theme="night"] .icon-moon{ display: block; }
 }
 
 /* ---------- Laptop scene ---------- */
+/* `perspective` here is also nudged by script.js on every frame
+   (a slightly tightening lens as the camera nears), which is why
+   it is not left purely to this fallback value. */
 .laptop-scene{
   position: relative;
   z-index: 1;
@@ -187,12 +214,19 @@ html[data-theme="night"] .icon-moon{ display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1500px;
+  perspective: 1600px;
+  perspective-origin: 50% 42%;
 }
+
+/* No CSS transition on transform: the rig's transform is written
+   every animation frame directly from scroll position, so it must
+   track 1:1 with no easing lag, or it would stop "catching up"
+   after the user stops scrolling instead of freezing instantly. */
 .laptop-rig{
-  transform-origin: 50% 78%;
+  transform-origin: 50% 85%;
   will-change: transform;
-  transform: rotateX(20deg) scale(.62) translateY(30px);
+  transform-style: preserve-3d;
+  transform: translateY(22px) rotateX(26deg) translateZ(-820px);
 }
 
 .laptop{
@@ -241,10 +275,10 @@ html[data-theme="night"] .icon-moon{ display: block; }
   inset: 6%;
   border-radius: var(--radius-md);
   background: radial-gradient(ellipse at 50% 30%, var(--blue-soft), transparent 65%);
-  opacity: .35;
+  opacity: .25;
   pointer-events: none;
   mix-blend-mode: soft-light;
-  transition: opacity .8s var(--ease);
+  will-change: opacity;
 }
 #screen-inner.tint-offline ~ .screen-glow{ background: radial-gradient(ellipse at 50% 30%, var(--pink-soft), transparent 65%); }
 
@@ -371,8 +405,8 @@ html[data-theme="night"] .icon-moon{ display: block; }
   background: radial-gradient(ellipse at center, rgba(20,30,50,.35), transparent 72%);
   filter: blur(6px);
   z-index: -1;
-  opacity: .5;
-  transition: opacity .6s var(--ease);
+  opacity: .22;
+  will-change: opacity, transform;
 }
 html[data-theme="night"] .laptop-shadow{
   background: radial-gradient(ellipse at center, rgba(0,0,0,.6), transparent 72%);
@@ -388,7 +422,7 @@ html[data-theme="night"] .laptop-shadow{
   flex-direction: column;
   align-items: center;
   gap: .5rem;
-  z-index: 2;
+  z-index: 4;
   transition: opacity .5s var(--ease);
 }
 .scroll-cue span:first-child{
@@ -425,20 +459,20 @@ html[data-theme="night"] .laptop-shadow{
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce){
-  .laptop-rig{ transition: none; }
+  .hero-stage{ animation: none; }
   .scroll-cue-dot{ animation: none; opacity: 1; top: 12px; }
   .choice-btn, .back-btn, .theme-toggle{ transition: none; }
 }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px){
-  :root{ --track-length: 230vh; }
+  :root{ --track-length: 280vh; }
   .laptop{ width: min(84vw, 560px); }
   .chrome-mark{ font-size: .82rem; }
 }
 
 @media (max-width: 520px){
-  :root{ --track-length: 200vh; }
+  :root{ --track-length: 240vh; }
   .laptop{ width: 90vw; }
   .laptop-lid{ padding: 4.4%; border-radius: 18px; }
   .choice-row{ flex-direction: column; width: 100%; }
