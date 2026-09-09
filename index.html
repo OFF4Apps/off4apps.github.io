@@ -1,74 +1,409 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="day">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="OFF4Apps — simple apps for a better tomorrow.">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="OFF4Apps — Simple apps. A better tomorrow."
+  >
+
   <title>OFF4Apps</title>
+
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-<header class="topbar">
-  <div class="brand">OFF4Apps</div>
-  <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to night mode">
-    <span class="sun">☀</span><span class="moon">☾</span>
-  </button>
-</header>
 
-<main>
-  <section class="cinematic-track" id="cinematicTrack">
-    <div class="cinematic-stage">
-      <div class="ambient ambient-blue"></div>
-      <div class="ambient ambient-pink"></div>
-      <div class="floor-glow"></div>
-      <div class="vignette" id="vignette"></div>
+  <!-- =========================
+       TOP BAR
+  ========================== -->
 
-      <div class="camera-space">
-        <div class="laptop-rig" id="laptopRig">
-          <div class="laptop">
-            <div class="lid">
-              <div class="camera-dot"></div>
-              <div class="screen">
-                <div class="screen-content">
-                  <section class="panel active" data-panel="home">
-                    <div class="screen-brand">OFF4Apps</div>
-                    <div class="tagline">SIMPLE APPS. A BETTER TOMORROW.</div>
-                    <div class="choices">
-                      <button class="choice offline" data-open="offline">Offline Apps</button>
-                      <button class="choice online" data-open="online">Online Apps</button>
-                    </div>
-                  </section>
+  <header class="topbar">
 
-                  <section class="panel" data-panel="offline">
-                    <div class="panel-title">Offline Apps</div>
-                    <p>Offline-first applications will be showcased here.</p>
-                    <button class="back" data-open="home">Back</button>
-                  </section>
-
-                  <section class="panel" data-panel="online">
-                    <div class="panel-title">Online Apps</div>
-                    <p>Connected applications will be showcased here.</p>
-                    <button class="back" data-open="home">Back</button>
-                  </section>
-                </div>
-                <div class="reflection"></div>
-              </div>
-            </div>
-            <div class="hinge"></div>
-            <div class="base"><div class="trackpad"></div></div>
-          </div>
-          <div class="shadow"></div>
-        </div>
-      </div>
-
-      <div class="scroll-cue" id="scrollCue">
-        <span>SCROLL</span>
-        <i></i>
-      </div>
+    <div class="brand">
+      <div class="brand-mark">O4</div>
+      <span>OFF4Apps</span>
     </div>
-  </section>
-</main>
 
-<script src="script.js"></script>
+    <button
+      id="themeToggle"
+      class="theme-toggle"
+      type="button"
+      aria-label="Toggle day and night mode"
+    >
+      <span id="themeIcon">☾</span>
+    </button>
+
+  </header>
+
+
+  <!-- =========================
+       CINEMATIC EXPERIENCE
+  ========================== -->
+
+  <main>
+
+    <section
+      id="cinematicTrack"
+      class="cinematic-track"
+    >
+
+      <div class="cinematic-stage">
+
+        <!-- Ambient background -->
+
+        <div class="ambient ambient-one"></div>
+        <div class="ambient ambient-two"></div>
+        <div class="ambient ambient-three"></div>
+
+        <div class="camera-space">
+
+          <!-- =========================
+               LAPTOP
+          ========================== -->
+
+          <div
+            id="laptopRig"
+            class="laptop-rig"
+          >
+
+            <div class="laptop">
+
+              <div class="laptop-lid">
+
+                <div class="laptop-screen">
+
+                  <div class="screen-content">
+
+                    <div class="screen-top">
+
+                      <div class="mini-brand">
+                        <span class="mini-mark">O4</span>
+                        <span>OFF4Apps</span>
+                      </div>
+
+                      <div class="screen-theme">
+                        SIMPLE APPS.
+                      </div>
+
+                    </div>
+
+
+                    <div class="screen-center">
+
+                      <p class="screen-eyebrow">
+                        SIMPLE APPS. A BETTER TOMORROW.
+                      </p>
+
+                      <h1>
+                        OFF4Apps
+                      </h1>
+
+                      <p class="screen-description">
+                        Useful digital experiences,
+                        designed with simplicity in mind.
+                      </p>
+
+
+                      <div class="choice-grid">
+
+                        <button
+                          class="choice-card"
+                          data-panel="offline"
+                          type="button"
+                        >
+
+                          <span class="choice-icon">
+                            ↓
+                          </span>
+
+                          <span class="choice-text">
+                            <strong>Offline Apps</strong>
+                            <small>
+                              Apps that work locally.
+                            </small>
+                          </span>
+
+                          <span class="choice-arrow">
+                            →
+                          </span>
+
+                        </button>
+
+
+                        <button
+                          class="choice-card"
+                          data-panel="online"
+                          type="button"
+                        >
+
+                          <span class="choice-icon">
+                            ◉
+                          </span>
+
+                          <span class="choice-text">
+                            <strong>Online Apps</strong>
+                            <small>
+                              Connected digital tools.
+                            </small>
+                          </span>
+
+                          <span class="choice-arrow">
+                            →
+                          </span>
+
+                        </button>
+
+                      </div>
+
+                    </div>
+
+
+                    <div class="screen-bottom">
+
+                      <span>
+                        OFF4Apps
+                      </span>
+
+                      <span>
+                        Scroll to explore
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="laptop-base">
+
+                <div class="keyboard">
+
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+
+                </div>
+
+                <div class="trackpad"></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             SCROLL INDICATOR
+        ========================== -->
+
+        <div
+          id="scrollCue"
+          class="scroll-cue"
+        >
+
+          <span class="scroll-line"></span>
+
+          <span>
+            Scroll
+          </span>
+
+        </div>
+
+
+        <!-- =========================
+             VIGNETTE
+        ========================== -->
+
+        <div class="vignette"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         APP WORLDS
+    ========================== -->
+
+    <section
+      id="offline"
+      class="app-section offline-section"
+    >
+
+      <div class="section-inner">
+
+        <span class="section-label">
+          OFFLINE APPS
+        </span>
+
+        <h2>
+          Tools that stay with you.
+        </h2>
+
+        <p>
+          Practical applications designed to work locally
+          without unnecessary online dependencies.
+        </p>
+
+
+        <div class="app-placeholder">
+
+          <div class="placeholder-icon">
+            ↓
+          </div>
+
+          <div>
+            <strong>
+              Your offline apps will appear here.
+            </strong>
+
+            <span>
+              This section is ready for your future projects.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section
+      id="online"
+      class="app-section online-section"
+    >
+
+      <div class="section-inner">
+
+        <span class="section-label">
+          ONLINE APPS
+        </span>
+
+        <h2>
+          Connected when you need it.
+        </h2>
+
+        <p>
+          Useful digital experiences built around
+          connected services and modern workflows.
+        </p>
+
+
+        <div class="app-placeholder">
+
+          <div class="placeholder-icon">
+            ◉
+          </div>
+
+          <div>
+            <strong>
+              Your online apps will appear here.
+            </strong>
+
+            <span>
+              This section is ready for your future projects.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section class="about-section">
+
+      <div class="section-inner">
+
+        <span class="section-label">
+          ABOUT OFF4APPS
+        </span>
+
+        <h2>
+          Simple apps.
+          <br>
+          A better tomorrow.
+        </h2>
+
+        <p>
+          OFF4Apps is a collection of practical digital
+          applications focused on simplicity, usefulness
+          and a clean user experience.
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
+  <footer class="footer">
+
+    <div class="footer-brand">
+      OFF4Apps
+    </div>
+
+    <span>
+      Simple apps. A better tomorrow.
+    </span>
+
+  </footer>
+
+
+  <script src="script.js"></script>
+
 </body>
 </html>
