@@ -1,1687 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="description"
-content="OFF4Apps — Simple applications with a focus on useful offline tools.">
-
-<meta name="theme-color" content="#f7f8fb">
-
-<title>OFF4Apps — Simple Apps. A Better Tomorrow.</title>
-
-<style>
-
-/* =========================================================
-   OFF4Apps — PHASE 2.1
-   Cinematic Landing Experience
-========================================================= */
-
-:root {
-
-    --bg: #f7f8fb;
-
-    --surface:
-        rgba(255,255,255,.58);
-
-    --surface-solid:
-        rgba(255,255,255,.90);
-
-    --text:
-        #111827;
-
-    --muted:
-        #667085;
-
-    --border:
-        rgba(17,24,39,.10);
-
-    --blue:
-        #1473e6;
-
-    --pink:
-        #e85b91;
-
-    --blue-soft:
-        rgba(20,115,230,.12);
-
-    --pink-soft:
-        rgba(232,91,145,.12);
-
-    --shadow:
-        0 35px 100px rgba(20,30,50,.15);
-
-    --cinematic-ease:
-        cubic-bezier(.16,1,.3,1);
-}
-
-
-body.dark {
-
-    --bg: #0b1017;
-
-    --surface:
-        rgba(20,27,38,.60);
-
-    --surface-solid:
-        rgba(20,27,38,.92);
-
-    --text:
-        #f4f7fb;
-
-    --muted:
-        #9ba8ba;
-
-    --border:
-        rgba(255,255,255,.10);
-
-    --blue:
-        #62a8ff;
-
-    --pink:
-        #ff78aa;
-
-    --blue-soft:
-        rgba(98,168,255,.12);
-
-    --pink-soft:
-        rgba(255,120,170,.12);
-
-    --shadow:
-        0 35px 100px rgba(0,0,0,.40);
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-* {
-    box-sizing: border-box;
-}
-
-
-html {
-    scroll-behavior: smooth;
-}
-
-
-body {
-
-    margin: 0;
-
-    color:
-        var(--text);
-
-    font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-    background:
-
-        radial-gradient(
-            circle at 15% 20%,
-            var(--pink-soft),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 85% 20%,
-            var(--blue-soft),
-            transparent 30%
-        ),
-
-        var(--bg);
-
-    overflow-x: hidden;
-
-    transition:
-        background .6s ease,
-        color .6s ease;
-}
-
-
-body::before {
-
-    content: "";
-
-    position: fixed;
-
-    inset: 0;
-
-    pointer-events: none;
-
-    z-index: -1;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(255,255,255,.30),
-            transparent 42%
-        );
-
-    opacity: .8;
-}
-
-
-body.dark::before {
-
-    background:
-
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(100,150,255,.07),
-            transparent 45%
-        );
-}
-
-
-a {
-
-    color: inherit;
-
-    text-decoration: none;
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.nav {
-
-    position: fixed;
-
-    z-index: 100;
-
-    top: 18px;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    width:
-        min(1100px, calc(100% - 32px));
-
-    padding:
-        11px 16px 11px 20px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        999px;
-
-    background:
-        var(--surface);
-
-    backdrop-filter:
-        blur(24px);
-
-    -webkit-backdrop-filter:
-        blur(24px);
-
-    box-shadow:
-        0 12px 45px
-        rgba(0,0,0,.08);
-}
-
-
-.logo {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    font-size:
-        1.1rem;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        -.04em;
-}
-
-
-.logo-box {
-
-    width: 35px;
-
-    height: 35px;
-
-    display: grid;
-
-    place-items: center;
-
-    border-radius:
-        11px;
-
-    color:
-        white;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            var(--blue),
-            var(--pink)
-        );
-
-    box-shadow:
-
-        0 8px 25px
-        rgba(20,115,230,.25);
-}
-
-
-.theme {
-
-    width: 45px;
-
-    height: 34px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        999px;
-
-    background:
-        var(--surface-solid);
-
-    color:
-        var(--text);
-
-    cursor:
-        pointer;
-
-    transition:
-        transform .25s ease;
-}
-
-
-.theme:hover {
-
-    transform:
-        translateY(-2px);
-}
-
-
-/* =========================================================
-   CINEMATIC HERO
-========================================================= */
-
-.cinematic {
-
-    height:
-        230vh;
-
-    position:
-        relative;
-}
-
-
-.cinematic-sticky {
-
-    position:
-        sticky;
-
-    top:
-        0;
-
-    height:
-        100svh;
-
-    overflow:
-        hidden;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    perspective:
-        1800px;
-}
-
-
-/* =========================================================
-   HERO TEXT
-========================================================= */
-
-.hero-content {
-
-    position:
-        absolute;
-
-    z-index:
-        5;
-
-    top:
-        17%;
-
-    left:
-        50%;
-
-    transform:
-        translateX(-50%);
-
-    width:
-        min(900px,90%);
-
-    text-align:
-        center;
-
-    pointer-events:
-        none;
-
-    will-change:
-        opacity,
-        transform,
-        filter;
-}
-
-
-.eyebrow {
-
-    margin-bottom:
-        16px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        .72rem;
-
-    letter-spacing:
-        .28em;
-
-    text-transform:
-        uppercase;
-}
-
-
-.hero-content h1 {
-
-    margin:
-        0;
-
-    font-size:
-        clamp(3rem,7vw,6.5rem);
-
-    line-height:
-        .92;
-
-    letter-spacing:
-        -.075em;
-
-    font-weight:
-        850;
-}
-
-
-.gradient {
-
-    background:
-
-        linear-gradient(
-            100deg,
-            var(--blue),
-            var(--pink)
-        );
-
-    -webkit-background-clip:
-        text;
-
-    background-clip:
-        text;
-
-    color:
-        transparent;
-}
-
-
-.hero-text {
-
-    max-width:
-        600px;
-
-    margin:
-        24px auto;
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.7;
-
-    font-size:
-        clamp(.95rem,2vw,1.08rem);
-}
-
-
-/* =========================================================
-   LAPTOP WORLD
-========================================================= */
-
-.laptop-world {
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    perspective:
-        1800px;
-
-    transform-style:
-        preserve-3d;
-}
-
-
-/* =========================================================
-   AMBIENT GLOW
-========================================================= */
-
-.ambient-glow {
-
-    position:
-        absolute;
-
-    width:
-        70vw;
-
-    height:
-        45vw;
-
-    max-width:
-        1100px;
-
-    max-height:
-        650px;
-
-    border-radius:
-        50%;
-
-    background:
-
-        radial-gradient(
-            ellipse,
-            var(--pink-soft),
-            transparent 68%
-        );
-
-    filter:
-        blur(35px);
-
-    transform:
-        translateY(8vh)
-        scale(1);
-
-    opacity:
-        .65;
-
-    transition:
-        transform .12s linear,
-        opacity .12s linear;
-
-    pointer-events:
-        none;
-}
-
-
-/* =========================================================
-   FLOOR SHADOW
-========================================================= */
-
-.laptop-world::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    width:
-        min(760px,70vw);
-
-    height:
-        120px;
-
-    left:
-        50%;
-
-    bottom:
-        8%;
-
-    transform:
-        translateX(-50%)
-        translateY(20px)
-        scaleX(1);
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(20,30,50,.15);
-
-    filter:
-        blur(35px);
-
-    opacity:
-        .55;
-
-    pointer-events:
-        none;
-
-    transition:
-        transform .12s linear,
-        opacity .12s linear;
-}
-
-
-body.dark .laptop-world::after {
-
-    background:
-        rgba(0,0,0,.55);
-}
-
-
-/* =========================================================
-   LAPTOP
-========================================================= */
-
-.laptop {
-
-    position:
-        relative;
-
-    width:
-        min(900px,92vw);
-
-    aspect-ratio:
-        16 / 10;
-
-    transform-style:
-        preserve-3d;
-
-    transform:
-
-        translate3d(
-            0,
-            var(--moveY,6vh),
-            var(--depth,0px)
-        )
-
-        rotateX(var(--rx,0deg))
-
-        rotateY(var(--ry,0deg))
-
-        scale(var(--scale,1));
-
-    will-change:
-        transform;
-
-    transition:
-        transform .06s linear;
-}
-
-
-/* =========================================================
-   SCREEN SHELL
-========================================================= */
-
-.screen-shell {
-
-    position:
-        absolute;
-
-    top:
-        0;
-
-    left:
-        8%;
-
-    right:
-        8%;
-
-    height:
-        78%;
-
-    padding:
-        12px;
-
-    border-radius:
-        25px 25px 10px 10px;
-
-    background:
-
-        linear-gradient(
-            145deg,
-            #363c46,
-            #080b10
-        );
-
-    box-shadow:
-
-        inset
-        0 0 0 1px
-        rgba(255,255,255,.13),
-
-        0 35px 60px
-        rgba(0,0,0,.20);
-
-    transform:
-        translateZ(0);
-
-    transform-style:
-        preserve-3d;
-}
-
-
-/* =========================================================
-   SCREEN
-========================================================= */
-
-.screen {
-
-    position:
-        relative;
-
-    height:
-        100%;
-
-    overflow:
-        hidden;
-
-    border-radius:
-        15px 15px 5px 5px;
-
-    background:
-
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(255,255,255,.95),
-            transparent 38%
-        ),
-
-        linear-gradient(
-            145deg,
-            #eef3f8,
-            #dce6f1
-        );
-}
-
-
-body.dark .screen {
-
-    background:
-
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(98,168,255,.15),
-            transparent 38%
-        ),
-
-        linear-gradient(
-            145deg,
-            #151c27,
-            #090e15
-        );
-}
-
-
-.screen::after {
-
-    content:
-        "";
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    pointer-events:
-        none;
-
-    background:
-
-        radial-gradient(
-            circle at 25% 45%,
-            var(--pink-soft),
-            transparent 28%
-        ),
-
-        radial-gradient(
-            circle at 75% 50%,
-            var(--blue-soft),
-            transparent 30%
-        );
-}
-
-
-/* =========================================================
-   SCREEN CONTENT
-========================================================= */
-
-.screen-content {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    height:
-        100%;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-}
-
-
-.screen-logo {
-
-    font-size:
-        clamp(1.4rem,3vw,2.5rem);
-
-    font-weight:
-        850;
-
-    letter-spacing:
-        -.055em;
-}
-
-
-.tagline {
-
-    margin-top:
-        5px;
-
-    margin-bottom:
-        30px;
-
-    color:
-        var(--muted);
-
-    font-size:
-        .6rem;
-
-    letter-spacing:
-        .25em;
-
-    text-transform:
-        uppercase;
-}
-
-
-/* =========================================================
-   CHOICES
-========================================================= */
-
-.choices {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(2,minmax(170px,230px));
-
-    gap:
-        18px;
-}
-
-
-.choice {
-
-    min-height:
-        150px;
-
-    padding:
-        20px;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    border:
-        1px solid
-        rgba(255,255,255,.72);
-
-    border-radius:
-        22px;
-
-    background:
-        rgba(255,255,255,.45);
-
-    backdrop-filter:
-        blur(18px);
-
-    -webkit-backdrop-filter:
-        blur(18px);
-
-    box-shadow:
-        0 15px 35px
-        rgba(30,50,80,.08);
-
-    transition:
-        transform .4s var(--cinematic-ease),
-        box-shadow .4s ease,
-        border-color .4s ease;
-}
-
-
-body.dark .choice {
-
-    background:
-        rgba(20,27,38,.48);
-
-    border-color:
-        rgba(255,255,255,.10);
-}
-
-
-.choice:hover {
-
-    transform:
-        translateY(-12px)
-        scale(1.035);
-
-    box-shadow:
-        0 28px 55px
-        rgba(20,30,50,.18);
-}
-
-
-.choice-icon {
-
-    width:
-        48px;
-
-    height:
-        48px;
-
-    margin-bottom:
-        12px;
-
-    display:
-        grid;
-
-    place-items:
-        center;
-
-    border-radius:
-        16px;
-
-    font-size:
-        1.25rem;
-}
-
-
-.online .choice-icon {
-
-    color:
-        var(--blue);
-
-    background:
-        var(--blue-soft);
-}
-
-
-.offline .choice-icon {
-
-    color:
-        var(--pink);
-
-    background:
-        var(--pink-soft);
-}
-
-
-.choice strong {
-
-    font-size:
-        1.03rem;
-}
-
-
-.choice small {
-
-    margin-top:
-        6px;
-
-    color:
-        var(--muted);
-
-    text-align:
-        center;
-}
-
-
-/* =========================================================
-   LAPTOP BASE
-========================================================= */
-
-.base {
-
-    position:
-        absolute;
-
-    left:
-        3%;
-
-    right:
-        3%;
-
-    bottom:
-        2%;
-
-    height:
-        25%;
-
-    background:
-
-        linear-gradient(
-            180deg,
-            #b6bdc6,
-            #707985
-        );
-
-    clip-path:
-
-        polygon(
-            5% 0,
-            95% 0,
-            100% 70%,
-            96% 100%,
-            4% 100%,
-            0 70%
-        );
-
-    border-radius:
-        5px 5px 28px 28px;
-
-    box-shadow:
-        0 25px 25px
-        rgba(0,0,0,.18);
-}
-
-
-.trackpad {
-
-    position:
-        absolute;
-
-    width:
-        24%;
-
-    height:
-        38%;
-
-    left:
-        38%;
-
-    top:
-        18%;
-
-    border-radius:
-        8px;
-
-    background:
-        rgba(255,255,255,.15);
-
-    border:
-        1px solid
-        rgba(0,0,0,.10);
-}
-
-
-/* =========================================================
-   CINEMATIC OVERLAY
-========================================================= */
-
-.cinematic-overlay {
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    z-index:
-        4;
-
-    pointer-events:
-        none;
-
-    background:
-
-        radial-gradient(
-            circle at center,
-            transparent 18%,
-            rgba(0,0,0,.16)
-        );
-
-    opacity:
-        var(--vignette,0);
-
-    transition:
-        opacity .1s linear;
-}
-
-
-/* =========================================================
-   SCROLL INDICATOR
-========================================================= */
-
-.scroll-indicator {
-
-    position:
-        absolute;
-
-    z-index:
-        8;
-
-    bottom:
-        28px;
-
-    left:
-        50%;
-
-    transform:
-        translateX(-50%);
-
-    color:
-        var(--muted);
-
-    font-size:
-        .72rem;
-
-    letter-spacing:
-        .16em;
-
-    text-transform:
-        uppercase;
-
-    transition:
-        opacity .15s linear;
-}
-
-
-/* =========================================================
-   NORMAL SECTIONS
-========================================================= */
-
-.section {
-
-    min-height:
-        80svh;
-
-    padding:
-        120px 24px;
-
-    display:
-        grid;
-
-    place-items:
-        center;
-}
-
-
-.section-inner {
-
-    width:
-        min(1100px,100%);
-}
-
-
-.reveal {
-
-    opacity:
-        0;
-
-    transform:
-        translateY(55px)
-        scale(.97);
-
-    transition:
-        opacity .8s ease,
-        transform .8s ease;
-}
-
-
-.reveal.visible {
-
-    opacity:
-        1;
-
-    transform:
-        translateY(0)
-        scale(1);
-}
-
-
-.section h2 {
-
-    margin:
-        0;
-
-    font-size:
-        clamp(2.5rem,6vw,5rem);
-
-    line-height:
-        .98;
-
-    letter-spacing:
-        -.065em;
-}
-
-
-.section-description {
-
-    max-width:
-        620px;
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.7;
-}
-
-
-.cards {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:
-        24px;
-
-    margin-top:
-        50px;
-}
-
-
-.card {
-
-    min-height:
-        300px;
-
-    padding:
-        35px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        28px;
-
-    background:
-        var(--surface);
-
-    backdrop-filter:
-        blur(20px);
-
-    -webkit-backdrop-filter:
-        blur(20px);
-
-    box-shadow:
-        var(--shadow);
-
-    transition:
-        transform .45s ease,
-        border-color .45s ease;
-}
-
-
-.card:hover {
-
-    transform:
-        translateY(-8px);
-}
-
-
-.card-number {
-
-    color:
-        var(--muted);
-
-    font-size:
-        .7rem;
-
-    letter-spacing:
-        .2em;
-
-    text-transform:
-        uppercase;
-}
-
-
-.card h3 {
-
-    margin-top:
-        55px;
-
-    font-size:
-        2rem;
-
-    letter-spacing:
-        -.04em;
-}
-
-
-.card p {
-
-    max-width:
-        430px;
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.7;
-}
-
-
-.pill {
-
-    display:
-        inline-block;
-
-    margin-top:
-        20px;
-
-    padding:
-        9px 14px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        999px;
-
-    background:
-        var(--surface-solid);
-
-    color:
-        var(--muted);
-
-    font-size:
-        .78rem;
-}
-
-
-/* =========================================================
-   FINAL
-========================================================= */
-
-.final {
-
-    min-height:
-        65svh;
-
-    text-align:
-        center;
-}
-
-
-.final p {
-
-    max-width:
-        550px;
-
-    margin:
-        25px auto;
-
-    color:
-        var(--muted);
-
-    line-height:
-        1.7;
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-footer {
-
-    padding:
-        30px 24px;
-
-    border-top:
-        1px solid
-        var(--border);
-
-    color:
-        var(--muted);
-
-    font-size:
-        .8rem;
-}
-
-
-.footer-inner {
-
-    width:
-        min(1100px,100%);
-
-    margin:
-        auto;
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:760px) {
-
-    .nav {
-
-        top:
-            10px;
-
-        width:
-            calc(100% - 20px);
-    }
-
-
-    .cinematic {
-
-        height:
-            180vh;
-    }
-
-
-    .cinematic-sticky {
-
-        perspective:
-            1100px;
-    }
-
-
-    .hero-content {
-
-        top:
-            14%;
-    }
-
-
-    .hero-content h1 {
-
-        font-size:
-            clamp(3rem,14vw,5rem);
-    }
-
-
-    .hero-text {
-
-        font-size:
-            .92rem;
-
-        max-width:
-            500px;
-    }
-
-
-    .laptop {
-
-        width:
-            105vw;
-
-        transform:
-
-            translate3d(
-                0,
-                var(--moveY,5vh),
-                0
-            )
-
-            scale(var(--scale,1)) !important;
-    }
-
-
-    .screen-shell {
-
-        left:
-            2%;
-
-        right:
-            2%;
-
-        padding:
-            8px;
-
-        border-radius:
-            16px 16px 7px 7px;
-    }
-
-
-    .screen {
-
-        border-radius:
-            10px 10px 4px 4px;
-    }
-
-
-    .screen-logo {
-
-        font-size:
-            1.25rem;
-    }
-
-
-    .tagline {
-
-        font-size:
-            .42rem;
-
-        margin-bottom:
-            14px;
-    }
-
-
-    .choices {
-
-        width:
-            90%;
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-        gap:
-            9px;
-    }
-
-
-    .choice {
-
-        min-height:
-            112px;
-
-        padding:
-            10px;
-
-        border-radius:
-            15px;
-    }
-
-
-    .choice-icon {
-
-        width:
-            34px;
-
-        height:
-            34px;
-
-        margin-bottom:
-            7px;
-
-        border-radius:
-            11px;
-
-        font-size:
-            .9rem;
-    }
-
-
-    .choice strong {
-
-        font-size:
-            .76rem;
-    }
-
-
-    .choice small {
-
-        font-size:
-            .55rem;
-    }
-
-
-    .section {
-
-        padding:
-            90px 20px;
-    }
-
-
-    .cards {
-
-        grid-template-columns:
-            1fr;
-    }
-
-
-    .card {
-
-        min-height:
-            260px;
-
-        padding:
-            28px;
-    }
-
-
-    .footer-inner {
-
-        flex-direction:
-            column;
-
-        gap:
-            10px;
-    }
-
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-@media(prefers-reduced-motion:reduce) {
-
-    html {
-
-        scroll-behavior:
-            auto;
-    }
-
-    *,
-    *::before,
-    *::after {
-
-        animation-duration:
-            .01ms !important;
-
-        transition-duration:
-            .01ms !important;
-    }
-}
-
-</style>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="OFF4Apps — Simple Apps. A Better Tomorrow."
+    >
+
+    <meta
+        name="theme-color"
+        content="#f7f8fb"
+    >
+
+    <title>
+        OFF4Apps — Simple Apps. A Better Tomorrow.
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
 </head>
-
 
 <body>
 
-
-<!-- =======================================================
+<!-- =====================================================
      NAVIGATION
-======================================================= -->
+===================================================== -->
 
 <header class="nav">
 
     <a
-        href="#"
+        href="#home"
         class="logo"
-        aria-label="OFF4Apps home">
+        aria-label="OFF4Apps Home"
+    >
 
         <span class="logo-box">
             O4
@@ -1698,118 +57,131 @@ footer {
         class="theme"
         id="themeButton"
         type="button"
-        aria-label="Switch between light and dark mode">
-
+        aria-label="Switch theme"
+    >
         ☼
-
     </button>
 
 </header>
 
 
-
-<!-- =======================================================
+<!-- =====================================================
      CINEMATIC HERO
-======================================================= -->
+===================================================== -->
 
 <section
     class="cinematic"
-    id="home">
-
+    id="home"
+>
 
     <div class="cinematic-sticky">
 
 
-        <!-- Ambient background -->
+        <!-- Atmospheric background -->
 
         <div
-            class="ambient-glow"
-            id="ambientGlow">
-        </div>
+            class="ambient ambient-pink"
+            id="ambientPink"
+        ></div>
+
+        <div
+            class="ambient ambient-blue"
+            id="ambientBlue"
+        ></div>
+
+        <div
+            class="ambient ambient-white"
+            id="ambientWhite"
+        ></div>
+
+
+        <!-- Background grid -->
+
+        <div class="background-grid"></div>
 
 
         <!-- Hero text -->
 
         <div
             class="hero-content"
-            id="heroContent">
+            id="heroContent"
+        >
 
             <div class="eyebrow">
-
-                Simple · Useful · Reliable
-
+                SIMPLE · USEFUL · RELIABLE
             </div>
 
-
             <h1>
-
-                Apps for a<br>
+                Apps for a
+                <br>
 
                 <span class="gradient">
                     Calmer Digital Life.
                 </span>
-
             </h1>
 
-
             <p class="hero-text">
-
                 Useful applications with a special focus
                 on offline tools — designed to keep things
                 simple, capable and under your control.
-
             </p>
 
         </div>
 
 
-
-        <!-- Laptop -->
+        <!-- =================================================
+             LAPTOP WORLD
+        ================================================== -->
 
         <div
             class="laptop-world"
-            id="laptopWorld">
+            id="laptopWorld"
+        >
+
+            <div
+                class="laptop-shadow"
+                id="laptopShadow"
+            ></div>
 
 
             <div
                 class="laptop"
-                id="laptop">
+                id="laptop"
+            >
 
-
-                <!-- Laptop screen -->
+                <!-- Screen -->
 
                 <div class="screen-shell">
 
                     <div class="screen">
 
+                        <div class="screen-glow"></div>
 
                         <div class="screen-content">
 
 
                             <div class="screen-logo">
-
                                 OFF4<span class="gradient">
                                     Apps
                                 </span>
-
                             </div>
 
 
                             <div class="tagline">
-
-                                Simple Apps · A Better Tomorrow
-
+                                SIMPLE APPS · A BETTER TOMORROW
                             </div>
 
-
-                            <!-- Choices -->
 
                             <div class="choices">
 
 
+                                <!-- Online -->
+
                                 <a
                                     href="#online"
-                                    class="choice online">
+                                    class="choice online"
+                                    data-choice="online"
+                                >
 
                                     <div class="choice-icon">
                                         ◉
@@ -1823,12 +195,20 @@ footer {
                                         When you need to connect.
                                     </small>
 
+                                    <span class="choice-arrow">
+                                        →
+                                    </span>
+
                                 </a>
 
 
+                                <!-- Offline -->
+
                                 <a
                                     href="#offline"
-                                    class="choice offline">
+                                    class="choice offline"
+                                    data-choice="offline"
+                                >
 
                                     <div class="choice-icon">
                                         ◌
@@ -1842,17 +222,34 @@ footer {
                                         Powerful tools without internet.
                                     </small>
 
+                                    <span class="choice-arrow">
+                                        →
+                                    </span>
+
                                 </a>
 
 
                             </div>
+
+
+                            <div class="screen-status">
+
+                                <span>
+                                    OFF4Apps
+                                </span>
+
+                                <span>
+                                    Select a world
+                                </span>
+
+                            </div>
+
 
                         </div>
 
                     </div>
 
                 </div>
-
 
 
                 <!-- Laptop base -->
@@ -1863,44 +260,47 @@ footer {
 
                 </div>
 
-
             </div>
 
         </div>
 
 
-
-        <!-- Cinematic overlay -->
+        <!-- Cinematic vignette -->
 
         <div
             class="cinematic-overlay"
-            id="cinematicOverlay">
-        </div>
+            id="cinematicOverlay"
+        ></div>
 
+
+        <!-- Scroll indicator -->
 
         <div
             class="scroll-indicator"
-            id="scrollIndicator">
+            id="scrollIndicator"
+        >
 
-            Scroll to enter ↓
+            <span class="scroll-line"></span>
+
+            <span>
+                Scroll to enter
+            </span>
 
         </div>
-
 
     </div>
 
 </section>
 
 
-
-<!-- =======================================================
-     OFFLINE
-======================================================= -->
+<!-- =====================================================
+     OFFLINE APPS
+===================================================== -->
 
 <section
     class="section"
-    id="offline">
-
+    id="offline"
+>
 
     <div class="section-inner">
 
@@ -1908,32 +308,26 @@ footer {
         <div class="reveal">
 
             <div class="eyebrow">
-                01 · Offline First
+                01 · OFFLINE FIRST
             </div>
 
-
             <h2>
-
-                More control.<br>
+                More control.
+                <br>
 
                 <span class="gradient">
                     Less dependency.
                 </span>
-
             </h2>
 
-
             <p class="section-description">
-
                 Applications designed to remain useful
                 when you're disconnected, travelling,
                 conserving data or simply choosing to
                 work without the internet.
-
             </p>
 
         </div>
-
 
 
         <div class="cards">
@@ -1942,23 +336,22 @@ footer {
             <article class="card reveal">
 
                 <div class="card-number">
-                    Offline Apps
+                    OFFLINE APPS
                 </div>
 
+                <div class="card-icon">
+                    ↓
+                </div>
 
                 <h3>
                     Work without the web.
                 </h3>
 
-
                 <p>
-
                     Tools designed to perform their core
                     purpose without requiring an internet
                     connection.
-
                 </p>
-
 
                 <span class="pill">
                     No internet required
@@ -1967,26 +360,24 @@ footer {
             </article>
 
 
-
             <article class="card reveal">
 
                 <div class="card-number">
-                    OFF4Apps approach
+                    OFF4APPS APPROACH
                 </div>
 
+                <div class="card-icon">
+                    ✦
+                </div>
 
                 <h3>
                     Simple by design.
                 </h3>
 
-
                 <p>
-
                     Useful applications without unnecessary
                     complexity or distractions.
-
                 </p>
-
 
                 <span class="pill">
                     Useful · Lightweight · Focused
@@ -2002,15 +393,14 @@ footer {
 </section>
 
 
-
-<!-- =======================================================
-     ONLINE
-======================================================= -->
+<!-- =====================================================
+     ONLINE APPS
+===================================================== -->
 
 <section
     class="section"
-    id="online">
-
+    id="online"
+>
 
     <div class="section-inner">
 
@@ -2018,56 +408,81 @@ footer {
         <div class="reveal">
 
             <div class="eyebrow">
-                02 · Online Apps
+                02 · ONLINE APPS
             </div>
 
-
             <h2>
-
-                Connected<br>
+                Connected
+                <br>
 
                 <span class="gradient">
                     when needed.
                 </span>
-
             </h2>
 
-
             <p class="section-description">
-
                 Online applications have their place too.
                 Useful connected tools when an internet
                 connection is actually part of the experience.
-
             </p>
 
         </div>
 
 
-
-        <div class="card reveal">
-
-            <div class="card-number">
-                Online Apps
-            </div>
+        <div class="cards">
 
 
-            <h3>
-                Different tools. Same philosophy.
-            </h3>
+            <article class="card reveal">
+
+                <div class="card-number">
+                    ONLINE APPS
+                </div>
+
+                <div class="card-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Connected when useful.
+                </h3>
+
+                <p>
+                    Online tools built around situations
+                    where connectivity genuinely adds value.
+                </p>
+
+                <span class="pill">
+                    Connected tools
+                </span>
+
+            </article>
 
 
-            <p>
+            <article class="card reveal">
 
-                Useful first. Simple second.
-                No unnecessary distractions.
+                <div class="card-number">
+                    SAME PHILOSOPHY
+                </div>
 
-            </p>
+                <div class="card-icon">
+                    →
+                </div>
 
+                <h3>
+                    Different tools. Same philosophy.
+                </h3>
 
-            <span class="pill">
-                Explore connected tools →
-            </span>
+                <p>
+                    Useful first. Simple second.
+                    No unnecessary distractions.
+                </p>
+
+                <span class="pill">
+                    Useful · Simple · Focused
+                </span>
+
+            </article>
+
 
         </div>
 
@@ -2076,38 +491,31 @@ footer {
 </section>
 
 
-
-<!-- =======================================================
+<!-- =====================================================
      FINAL
-======================================================= -->
+===================================================== -->
 
 <section class="section final">
 
     <div class="section-inner reveal">
 
-
         <div class="eyebrow">
-            OFF4Apps
+            OFF4APPS
         </div>
 
-
         <h2>
-
-            Technology should<br>
+            Technology should
+            <br>
 
             <span class="gradient">
                 feel lighter.
             </span>
-
         </h2>
 
-
         <p>
-
             Simple applications.
             Thoughtful experiences.
             A quieter way to use technology.
-
         </p>
 
     </div>
@@ -2115,10 +523,9 @@ footer {
 </section>
 
 
-
-<!-- =======================================================
+<!-- =====================================================
      FOOTER
-======================================================= -->
+===================================================== -->
 
 <footer>
 
@@ -2137,612 +544,7 @@ footer {
 </footer>
 
 
-
-<script>
-
-"use strict";
-
-
-/* =========================================================
-   THEME
-========================================================= */
-
-const themeButton =
-    document.getElementById(
-        "themeButton"
-    );
-
-
-const savedTheme =
-    localStorage.getItem(
-        "off4apps-theme"
-    );
-
-
-if (savedTheme === "dark") {
-
-    document.body.classList.add(
-        "dark"
-    );
-
-}
-
-
-function updateThemeButton() {
-
-    themeButton.textContent =
-        document.body.classList.contains("dark")
-            ? "☾"
-            : "☼";
-
-}
-
-
-updateThemeButton();
-
-
-themeButton.addEventListener(
-    "click",
-    () => {
-
-        document.body.classList.toggle(
-            "dark"
-        );
-
-
-        localStorage.setItem(
-            "off4apps-theme",
-
-            document.body.classList.contains("dark")
-                ? "dark"
-                : "light"
-        );
-
-
-        updateThemeButton();
-
-    }
-);
-
-
-/* =========================================================
-   CINEMATIC SCROLL ENGINE
-========================================================= */
-
-const cinematic =
-    document.getElementById(
-        "home"
-    );
-
-
-const laptop =
-    document.getElementById(
-        "laptop"
-    );
-
-
-const heroContent =
-    document.getElementById(
-        "heroContent"
-    );
-
-
-const ambientGlow =
-    document.getElementById(
-        "ambientGlow"
-    );
-
-
-const cinematicOverlay =
-    document.getElementById(
-        "cinematicOverlay"
-    );
-
-
-const scrollIndicator =
-    document.getElementById(
-        "scrollIndicator"
-    );
-
-
-const laptopWorld =
-    document.getElementById(
-        "laptopWorld"
-    );
-
-
-let animationFrame =
-    null;
-
-
-/* =========================================================
-   CLAMP
-========================================================= */
-
-function clamp(
-    value,
-    min,
-    max
-) {
-
-    return Math.max(
-        min,
-        Math.min(
-            max,
-            value
-        )
-    );
-
-}
-
-
-/* =========================================================
-   EASING
-========================================================= */
-
-function cinematicEase(value) {
-
-    return value < .5
-
-        ? 2 * value * value
-
-        : 1 -
-          Math.pow(
-              -2 * value + 2,
-              2
-          ) / 2;
-
-}
-
-
-/* =========================================================
-   UPDATE CINEMATIC
-========================================================= */
-
-function updateCinematic() {
-
-
-    const rect =
-        cinematic.getBoundingClientRect();
-
-
-    /*
-       Total physical distance
-       available for the cinematic.
-    */
-
-    const totalDistance =
-        cinematic.offsetHeight -
-        window.innerHeight;
-
-
-    if (totalDistance <= 0) {
-        return;
-    }
-
-
-    /*
-       How far the user has travelled
-       through the cinematic section.
-    */
-
-    const travelled =
-        -rect.top;
-
-
-    const progress =
-        clamp(
-            travelled /
-            totalDistance,
-
-            0,
-            1
-        );
-
-
-    /*
-       Cinematic easing.
-    */
-
-    const eased =
-        cinematicEase(
-            progress
-        );
-
-
-    /* =====================================================
-       CAMERA MOVEMENT
-    ===================================================== */
-
-
-    /*
-       Laptop starts smaller and farther away.
-       It progressively approaches the viewer.
-    */
-
-    const scale =
-        0.82 +
-        eased * 2.35;
-
-
-    /*
-       Positive Z brings the laptop
-       toward the camera.
-    */
-
-    const depth =
-        eased * 700;
-
-
-    /*
-       Small vertical camera movement.
-    */
-
-    const moveY =
-        7 -
-        eased * 12;
-
-
-    /*
-       Initial perspective angle.
-       Becomes almost flat near the end.
-    */
-
-    const rotateX =
-        12 -
-        eased * 10;
-
-
-    /*
-       Small natural horizontal angle.
-    */
-
-    const rotateY =
-        -2 +
-        eased * 2;
-
-
-    laptop.style.setProperty(
-        "--scale",
-        scale.toFixed(4)
-    );
-
-
-    laptop.style.setProperty(
-        "--depth",
-        `${depth.toFixed(1)}px`
-    );
-
-
-    laptop.style.setProperty(
-        "--moveY",
-        `${moveY.toFixed(2)}vh`
-    );
-
-
-    laptop.style.setProperty(
-        "--rx",
-        `${rotateX.toFixed(2)}deg`
-    );
-
-
-    laptop.style.setProperty(
-        "--ry",
-        `${rotateY.toFixed(2)}deg`
-    );
-
-
-    /* =====================================================
-       HERO TEXT
-    ===================================================== */
-
-
-    /*
-       Text disappears progressively
-       as the viewer enters the laptop.
-    */
-
-    const textOpacity =
-        clamp(
-            1 -
-            progress * 2.2,
-
-            0,
-            1
-        );
-
-
-    /*
-       Text also moves upward.
-    */
-
-    const textMove =
-        progress * -100;
-
-
-    /*
-       Slight blur while disappearing.
-    */
-
-    const textBlur =
-        progress * 5;
-
-
-    heroContent.style.opacity =
-        textOpacity;
-
-
-    heroContent.style.transform =
-        `translate(-50%, ${textMove}px)`;
-
-
-    heroContent.style.filter =
-        `blur(${textBlur}px)`;
-
-
-    /* =====================================================
-       AMBIENT LIGHT
-    ===================================================== */
-
-    const glowScale =
-        1 +
-        eased * 2;
-
-
-    const glowY =
-        8 -
-        eased * 18;
-
-
-    ambientGlow.style.transform =
-        `translateY(${glowY}vh)
-         scale(${glowScale})`;
-
-
-    ambientGlow.style.opacity =
-        .55 +
-        eased * .45;
-
-
-    /* =====================================================
-       FLOOR SHADOW
-    ===================================================== */
-
-    const shadowScale =
-        1 -
-        eased * .45;
-
-
-    const shadowOpacity =
-        .55 -
-        eased * .35;
-
-
-    laptopWorld.style.setProperty(
-        "--shadow-scale",
-        shadowScale
-    );
-
-
-    laptopWorld.style.setProperty(
-        "--shadow-opacity",
-        shadowOpacity
-    );
-
-
-    /* =====================================================
-       VIGNETTE
-    ===================================================== */
-
-    cinematicOverlay.style.setProperty(
-        "--vignette",
-        (eased * .30).toFixed(3)
-    );
-
-
-    /* =====================================================
-       SCROLL INDICATOR
-    ===================================================== */
-
-    scrollIndicator.style.opacity =
-        clamp(
-            1 -
-            progress * 5,
-
-            0,
-            1
-        );
-
-
-    animationFrame =
-        null;
-
-}
-
-
-/* =========================================================
-   REQUEST UPDATE
-========================================================= */
-
-function requestCinematicUpdate() {
-
-    if (!animationFrame) {
-
-        animationFrame =
-            requestAnimationFrame(
-                updateCinematic
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   SCROLL
-========================================================= */
-
-window.addEventListener(
-    "scroll",
-    requestCinematicUpdate,
-    {
-        passive: true
-    }
-);
-
-
-/* =========================================================
-   RESIZE
-========================================================= */
-
-window.addEventListener(
-    "resize",
-    requestCinematicUpdate
-);
-
-
-/* =========================================================
-   INITIAL
-========================================================= */
-
-updateCinematic();
-
-
-/* =========================================================
-   DESKTOP POINTER DEPTH
-========================================================= */
-
-const finePointer =
-    window.matchMedia(
-        "(pointer:fine)"
-    );
-
-
-if (finePointer.matches) {
-
-
-    laptopWorld.addEventListener(
-        "pointermove",
-        (event) => {
-
-
-            const rect =
-                laptopWorld.getBoundingClientRect();
-
-
-            const x =
-                (
-                    event.clientX -
-                    rect.left
-                )
-                /
-                rect.width
-                -
-                .5;
-
-
-            const y =
-                (
-                    event.clientY -
-                    rect.top
-                )
-                /
-                rect.height
-                -
-                .5;
-
-
-            /*
-               Pointer movement is intentionally
-               subtle so it doesn't fight the scroll.
-            */
-
-            laptop.style.setProperty(
-                "--ry",
-                `${x * 3}deg`
-            );
-
-
-            laptop.style.setProperty(
-                "--rx",
-                `${y * -2}deg`
-            );
-
-        }
-    );
-
-
-    laptopWorld.addEventListener(
-        "pointerleave",
-        () => {
-
-            laptop.style.setProperty(
-                "--ry",
-                "0deg"
-            );
-
-
-            laptop.style.setProperty(
-                "--rx",
-                "0deg"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   SECTION REVEALS
-========================================================= */
-
-const observer =
-    new IntersectionObserver(
-
-        (entries) => {
-
-            entries.forEach(
-                (entry) => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        entry.target
-                            .classList
-                            .add(
-                                "visible"
-                            );
-
-                    }
-
-                }
-            );
-
-        },
-
-        {
-            threshold:
-                .15
-        }
-
-    );
-
-
-document
-    .querySelectorAll(
-        ".reveal"
-    )
-    .forEach(
-        element =>
-            observer.observe(
-                element
-            )
-    );
-
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
