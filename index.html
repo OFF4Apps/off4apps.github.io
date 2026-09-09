@@ -10,7 +10,7 @@
 <body>
 
   <!-- Persistent minimal chrome: brand mark + day/night toggle -->
-  <div class="chrome" aria-hidden="false">
+  <div class="chrome">
     <span class="chrome-mark">OFF4Apps</span>
     <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to night mode">
       <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
@@ -32,17 +32,23 @@
     </button>
   </div>
 
-  <!-- The scroll track that drives the cinematic camera-move-in effect -->
+  <!-- The scroll track that drives the cinematic camera-move-in effect.
+       Its height determines how much physical scrolling maps to the
+       full 0 -> 1 camera journey. Everything visual is a function of
+       scroll position, computed and applied in script.js. -->
   <section class="hero-track" id="hero-track">
-    <div class="hero-stage">
+    <div class="hero-stage" id="hero-stage">
+
+      <!-- Darkens toward the edges as the camera pushes in, to sell depth -->
+      <div class="depth-vignette" id="depth-vignette" aria-hidden="true"></div>
 
       <div class="ambient-layer" aria-hidden="true">
-        <span class="blob blob-blue"></span>
-        <span class="blob blob-pink"></span>
+        <span class="blob blob-blue" id="blob-blue"></span>
+        <span class="blob blob-pink" id="blob-pink"></span>
         <span class="floor-glow"></span>
       </div>
 
-      <div class="laptop-scene">
+      <div class="laptop-scene" id="laptop-scene">
         <div class="laptop-rig" id="laptop-rig">
 
           <div class="laptop">
@@ -74,7 +80,7 @@
 
               </div>
 
-              <span class="screen-glow" aria-hidden="true"></span>
+              <span class="screen-glow" id="screen-glow" aria-hidden="true"></span>
             </div>
 
             <div class="laptop-hinge" aria-hidden="true"></div>
@@ -96,7 +102,7 @@
     </div>
   </section>
 
-  <!-- Placeholder so the page has a natural resting point after the cinematic entry -->
+  <!-- Natural resting point after the cinematic entry; content lands here in a later phase -->
   <section class="rest-note" aria-hidden="true"></section>
 
   <script src="script.js"></script>
