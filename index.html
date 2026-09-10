@@ -509,6 +509,30 @@ body.dark .choice {
 .choice small { margin-top: 6px; color: var(--muted); text-align: center; }
 
 /* =========================================================
+   CAMERA GROUND SHADOW
+========================================================= */
+
+.laptop-ground-shadow {
+    position: absolute;
+    left: 50%;
+    top: 67%;
+    width: min(720px, 72vw);
+    height: min(110px, 10vw);
+    transform: translate(-50%, -50%) scale(.58);
+    border-radius: 50%;
+    background: rgba(35, 45, 65, .18);
+    filter: blur(28px);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+body.dark .laptop-ground-shadow {
+    background: rgba(0, 0, 0, .42);
+}
+
+/* =========================================================
    LAPTOP BASE
 ========================================================= */
 
@@ -1209,6 +1233,11 @@ html, body {
         <!-- Laptop -->
 
         <div
+            class="laptop-ground-shadow"
+            id="laptopGroundShadow">
+        </div>
+
+        <div
             class="laptop-world"
             id="laptopWorld">
 
@@ -1310,7 +1339,7 @@ html, body {
 
         </div>
 
-        <!-- Portal intentionally disabled in Phase 2.4.
+        <!-- Portal intentionally disabled in Phase 2.5.
              We will build the screen-entry transition after the first-stage layout is stable. -->
 
 
@@ -1651,11 +1680,8 @@ themeButton.addEventListener(
 
 
 /* =========================================================
-   CINEMATIC SCROLL ENGINE — PHASE 2.4
-   STAGE 1: TEXT FIRST
-   STAGE 2: TEXT FADES COMPLETELY
-   STAGE 3: LAPTOP APPEARS
-   STAGE 4: LAPTOP APPROACHES
+   CINEMATIC SCROLL ENGINE — PHASE 2.7
+   TEXT → LAPTOP → CAMERA → SCREEN ENTRY → FULL-RES WORLD
 ========================================================= */
 
 const cinematic = document.getElementById("home");
@@ -1664,6 +1690,17 @@ const heroContent = document.getElementById("heroContent");
 const ambientGlow = document.getElementById("ambientGlow");
 const cinematicOverlay = document.getElementById("cinematicOverlay");
 const scrollIndicator = document.getElementById("scrollIndicator");
+
+const environmentLayer = document.querySelector(".environment-layer");
+const orbPink = document.querySelector(".orb-pink");
+const orbBlue = document.querySelector(".orb-blue");
+const orbWhite = document.querySelector(".orb-white");
+const glassLeft = document.querySelector(".glass-left");
+const glassRight = document.querySelector(".glass-right");
+const floorHaze = document.querySelector(".floor-haze");
+const floorReflection = document.querySelector(".floor-reflection");
+
+const screenWorld = document.getElementById("screenWorld");
 
 let animationFrame = null;
 
@@ -1689,80 +1726,52 @@ function updateCinematic() {
     );
 
     /*
-       TIMELINE
+       0.00 → 0.22  text holds
+       0.22 → 0.42  text fades
+       0.40 → 0.62  laptop appears
+       0.40 → 0.72  controlled laptop approach
+       0.70 → 1.00  screen-entry transition
 
-       0.00 → 0.22
-       Text is completely stable.
-
-       0.22 → 0.42
-       Text fades away.
-
-       0.42 → 0.62
-       Laptop gently appears.
-
-       0.62 → 0.92
-       Laptop makes the actual camera move.
-
-       0.92 → 1.00
-       Hold the composed laptop state.
-
-       The laptop never receives a giant scale.
-       This keeps the HTML interface sharp.
+       The laptop NEVER gets a giant scale.
+       The full-resolution world is a separate normal HTML section.
     */
 
-    /* ---------------------------------------------------------
-       1. HERO TEXT — FIRST THING THE USER SEES
-    --------------------------------------------------------- */
-
+    /* HERO TEXT */
     const textFade = smoothstep(
         clamp((progress - 0.22) / 0.20, 0, 1)
     );
 
-    const heroOpacity = 1 - textFade;
-
-    /*
-       Move the text only slightly while fading.
-       No blur-heavy animation — this keeps typography clean.
-    */
-    const heroY = -18 * textFade;
-
-    heroContent.style.opacity = heroOpacity.toFixed(3);
+    heroContent.style.opacity = (1 - textFade).toFixed(3);
     heroContent.style.transform =
-        `translate3d(-50%, ${heroY.toFixed(1)}px, 0)`;
+        `translate3d(-50%, ${(-18 * textFade).toFixed(1)}px, 0)`;
 
-    /* ---------------------------------------------------------
-       2. LAPTOP — DOES NOT EXIST VISUALLY UNTIL TEXT IS GONE
-    --------------------------------------------------------- */
-
+    /* LAPTOP CAMERA */
     const laptopEntry = smoothstep(
         clamp((progress - 0.40) / 0.22, 0, 1)
     );
 
-    /*
-       Starts small and slightly low.
-       It becomes visible only after the hero text has faded.
-    */
     const cameraProgress = smoothstep(
-        clamp((progress - 0.40) / 0.60, 0, 1)
+        clamp((progress - 0.40) / 0.42, 0, 1)
     );
 
     const scale =
-        0.68 +
-        cameraProgress * 0.64;          // 0.68 → 1.32
+        0.68 + cameraProgress * 0.80;      // 0.68 → 1.48
 
     const moveY =
-        10 -
-        cameraProgress * 8;              // 10vh → 2vh
+        10 - cameraProgress * 8;             // 10vh → 2vh
 
     const rotX =
-        12 -
-        cameraProgress * 10;             // 12deg → 2deg
+        12 - cameraProgress * 10;             // 12deg → 2deg
 
     const rotY =
-        -1.2 +
-        cameraProgress * 1.2;             // -1.2deg → 0deg
+        -1.2 + cameraProgress * 1.2;          // -1.2deg → 0deg
 
     laptop.style.opacity = laptopEntry.toFixed(3);
+
+    /* Screen-entry phase slightly brightens and softens the physical laptop. */
+    const entry = smoothstep(
+        clamp((progress - 0.68) / 0.32, 0, 1)
+    );
 
     laptop.style.transform =
         `translate3d(0, ${moveY.toFixed(2)}vh, 0) ` +
@@ -1770,10 +1779,10 @@ function updateCinematic() {
         `rotateY(${rotY.toFixed(2)}deg) ` +
         `scale(${scale.toFixed(4)})`;
 
-    /* ---------------------------------------------------------
-       3. AMBIENT BACKGROUND
-    --------------------------------------------------------- */
+    laptop.style.filter =
+        `brightness(${(1 + entry * 0.10).toFixed(3)})`;
 
+    /* AMBIENT GLOW */
     ambientGlow.style.transform =
         `translateY(${(8 - cameraProgress * 7).toFixed(2)}vh) ` +
         `scale(${(1 + cameraProgress * 0.28).toFixed(3)})`;
@@ -1781,14 +1790,83 @@ function updateCinematic() {
     ambientGlow.style.opacity =
         (0.55 + cameraProgress * 0.25).toFixed(3);
 
-    cinematicOverlay.style.setProperty(
-        "--vignette",
-        (cameraProgress * 0.10).toFixed(3)
-    );
+    /* ENVIRONMENT PARALLAX */
+    if (environmentLayer) {
+        const p = cameraProgress;
+
+        orbPink.style.transform =
+            `translate3d(${(-2 + p * 5).toFixed(2)}vw, ${(p * -2).toFixed(2)}vh, 0) scale(${(1 + p * .10).toFixed(3)})`;
+
+        orbBlue.style.transform =
+            `translate3d(${(2 - p * 4).toFixed(2)}vw, ${(p * 2).toFixed(2)}vh, 0) scale(${(1 + p * .12).toFixed(3)})`;
+
+        orbWhite.style.transform =
+            `translate3d(0, ${(p * -4).toFixed(2)}vh, 0) scale(${(1 + p * .08).toFixed(3)})`;
+
+        glassLeft.style.transform =
+            `translate3d(${(p * -18).toFixed(2)}px, ${(p * -9).toFixed(2)}px, 0) rotate(-9deg)`;
+
+        glassRight.style.transform =
+            `translate3d(${(p * 18).toFixed(2)}px, ${(p * -7).toFixed(2)}px, 0) rotate(10deg) scale(.88)`;
+
+        floorHaze.style.transform =
+            `translate3d(-50%, ${(p * -10).toFixed(2)}px, 0) scale(${(1 + p * .10).toFixed(3)})`;
+
+        floorReflection.style.transform =
+            `translate3d(-50%, ${(p * -4).toFixed(2)}px, 0) perspective(500px) rotateX(68deg) scale(${(0.82 + p * .18).toFixed(3)})`;
+
+        floorReflection.style.opacity =
+            (0.16 + p * 0.22).toFixed(3);
+    }
 
     /* ---------------------------------------------------------
-       4. SCROLL INDICATOR
+       SCREEN ENTRY
+       Fade the physical cinematic world out while the real
+       full-resolution HTML world fades in.
+
+       Both are controlled by the same scroll position.
     --------------------------------------------------------- */
+
+    if (screenWorld) {
+        const worldProgress = smoothstep(
+            clamp((progress - 0.70) / 0.30, 0, 1)
+        );
+
+        const worldOpacity = worldProgress;
+        const worldY = 28 - worldProgress * 28;
+
+        screenWorld.style.opacity =
+            worldOpacity.toFixed(3);
+
+        screenWorld.style.transform =
+            `translate3d(0, ${worldY.toFixed(2)}px, 0)`;
+
+        screenWorld.style.pointerEvents =
+            worldProgress > 0.92 ? "auto" : "none";
+
+        worldCards.forEach((card, index) => {
+            const cardStart = index * 0.10;
+            const cardProgress = smoothstep(
+                clamp((worldProgress - (0.34 + cardStart)) / 0.34, 0, 1)
+            );
+
+            card.style.opacity = cardProgress.toFixed(3);
+            card.style.transform =
+                `translate3d(0, ${(18 - cardProgress * 18).toFixed(2)}px, 0)`;
+        });
+
+        /*
+           The laptop is not enlarged during this transition.
+           It simply fades as the full-resolution world takes over.
+        */
+        laptop.style.opacity =
+            (laptopEntry * (1 - worldProgress * 0.92)).toFixed(3);
+
+        cinematicOverlay.style.setProperty(
+            "--vignette",
+            (cameraProgress * 0.10 + worldProgress * 0.08).toFixed(3)
+        );
+    }
 
     scrollIndicator.style.opacity =
         clamp(1 - progress * 6, 0, 1).toFixed(3);
